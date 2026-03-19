@@ -1,16 +1,24 @@
-// Grab our UI elements
-const startBtn = document.getElementById('start-adventure');
-const cityInput = document.getElementById('city-input');
-
-// This is where the magic starts
-startBtn.addEventListener('click', () => {
-    const city = cityInput.value.trim();
+// Function to get coordinates from a city name
+async function getCoordinates(city) {
+    const url = `https://cse2004.com/api/geocode?address=${encodeURIComponent(city)}`;
     
-    if (city === "") {
-        alert("Please enter a destination to check in!");
-        return;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Network response was not ok");
+        
+        const data = await response.json();
+        
+        // Check if Google actually found a place
+        if (data.results && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            console.log("Found location:", location);
+            return location; // Returns { lat: 38.627, lng: -90.199 }
+        } else {
+            throw new Error("City not found");
+        }
+    } catch (error) {
+        console.error("Geocoding Error:", error);
+        alert("We couldn't find that destination. Check your spelling!");
+        return null;
     }
-
-    console.log(`Starting adventure for: ${city}`);
-    // Next step will be calling the Geocoding API!
-});
+}
