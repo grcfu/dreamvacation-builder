@@ -1,25 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Passport | Adventure Builder</title>
-    <link rel="stylesheet" href="style.css">
-</head>
 <body>
-    <main id="passport-container">
-        <header>
-            <h1>Digital Passport</h1>
-            <p>Where is your dream destination?</p>
-        </header>
+    <div class="hero-section">
+        <div class="photobanner">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Mountains">
+            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1000&q=80" alt="Forest">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
+            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
+        </div>
 
-        <section id="step-1" class="step">
-            <input type="text" id="city-input" placeholder="Enter a city (e.g. Honolulu)">
-            <button id="start-adventure">Start Adventure</button>
-        </section>
+        <div class="overlay"></div>
 
-        <div id="itinerary-display"></div>
-    </main>
+        <main id="passport-container">
+            <header>
+                <h1 class="logo">DIGITAL PASSPORT</h1>
+                <p>Where is your dream destination?</p>
+            </header>
+
+            <section id="step-1" class="step">
+                <div class="glass-search">
+                    <input type="text" id="city-input" placeholder="Enter a city (e.g. Honolulu)">
+                    <button id="start-adventure">CHECK IN</button>
+                </div>
+            </section>
+
+            <div id="itinerary-display"></div>
+        </main>
+    </div>
     <script src="script.js"></script>
 </body>
-</html>
