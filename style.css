@@ -1,0 +1,64 @@
+/* Base Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: #000; color: white; overflow: hidden; }
+
+/* The Hero Wrapper */
+.hero-section { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+
+/* The Revolving Photobanner */
+.photobanner {
+    display: flex;
+    width: 300%; /* Enough room for all images */
+    height: 100vh;
+    animation: scrollBackground 40s linear infinite;
+}
+
+.photobanner img { width: 50vw; height: 100vh; object-fit: cover; }
+
+@keyframes scrollBackground {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* The Dark Overlay */
+.overlay {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.65); /* That dark opacity you wanted */
+    z-index: 1;
+}
+
+/* The Glassmorphism UI */
+#passport-container {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    height: 100vh; text-align: center;
+}
+
+.logo { font-size: 3rem; letter-spacing: 0.5rem; margin-bottom: 10px; font-weight: 200; }
+
+.glass-search {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 100px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+#city-input {
+    background: transparent; border: none; outline: none;
+    color: white; font-size: 1.1rem; width: 250px; padding: 10px;
+}
+
+#start-adventure {
+    background: white; color: black; border: none;
+    padding: 10px 25px; border-radius: 50px;
+    font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+
+#start-adventure:hover { background: #e0e0e0; transform: scale(1.05); }
