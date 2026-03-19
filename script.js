@@ -79,3 +79,34 @@ async function getCoordinates(city) {
         return null;
     }
 }
+
+function displayAdventureOptions(options) {
+    const displayArea = document.getElementById('itinerary-display');
+    displayArea.innerHTML = `<h2>Choose Your Vibe</h2><div class="card-container"></div>`;
+    
+    const container = displayArea.querySelector('.card-container');
+
+    options.forEach(option => {
+        const card = document.createElement('div');
+        card.className = 'adventure-card';
+        card.innerHTML = `
+            <h3>${option.name}</h3>
+            <p class="vibe-tag">${option.vibe}</p>
+            <p>${option.description}</p>
+        `;
+        
+        card.addEventListener('click', () => {
+            selectAdventure(option);
+        });
+
+        container.appendChild(card);
+    });
+
+    // Hide the initial search step
+    document.getElementById('step-1').style.display = 'none';
+}
+
+function selectAdventure(choice) {
+    console.log("Grace selected:", choice.name);
+    // This is where we will trigger the Weather & Atmospheric Shift next!
+}
