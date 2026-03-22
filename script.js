@@ -103,6 +103,24 @@ function selectAdventure(choice, coords) {
     // NEXT STEP: Trigger the Weather API and Environmental Shift here!
 }
 
+// Function to get real-time weather
+async function getWeather(lat, lng) {
+    const url = `https://cse2004.com/api/weather?latitude=${lat}&longitude=${lng}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        // We want the description (e.g., "Clear", "Rain", "Clouds")
+        return {
+            temp: data.temperature.degrees,
+            condition: data.weatherCondition.description.text,
+            isDay: data.isDay
+        };
+    } catch (error) {
+        console.error("Weather Error:", error);
+        return null;
+    }
+}
+
 // 4. The Main Event Listener
 startBtn.addEventListener('click', async () => {
     const city = cityInput.value.trim();
