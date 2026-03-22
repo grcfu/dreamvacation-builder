@@ -98,9 +98,24 @@ function displayAdventureOptions(options, coords) {
     document.getElementById('step-1').style.display = 'none';
 }
 
-function selectAdventure(choice, coords) {
-    console.log("Selected:", choice.name, "at", coords);
-    // NEXT STEP: Trigger the Weather API and Environmental Shift here!
+async function selectAdventure(choice, coords) {
+    console.log("Grace selected:", choice.name);
+    
+    // 1. Clear the screen for the next phase
+    displayArea.innerHTML = `<h2 class="loading-text">Preparing the atmosphere for ${choice.name}...</h2>`;
+
+    // 2. Fetch the weather
+    const weather = await getWeather(coords.lat, coords.lng);
+    
+    if (weather) {
+        triggerAtmosphericShift(weather.condition);
+        
+        // 3. Move to the next step: The Fit Check (We will build this next!)
+        setTimeout(() => {
+            // startFitCheck(choice, weather); 
+            displayArea.innerHTML = `<h2>It's ${weather.temp}°F and ${weather.condition}.</h2><p>Perfect for ${choice.name}.</p>`;
+        }, 2000);
+    }
 }
 
 // Function to get real-time weather
