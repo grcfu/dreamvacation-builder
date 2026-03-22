@@ -118,6 +118,32 @@ async function selectAdventure(choice, coords) {
     }
 }
 
+function triggerAtmosphericShift(condition) {
+    const overlay = document.querySelector('.overlay');
+    const envContainer = document.createElement('div');
+    envContainer.id = 'environment-overlay';
+    document.body.appendChild(envContainer);
+
+    const cond = condition.toLowerCase();
+
+    if (cond.includes('rain') || cond.includes('drizzle')) {
+        overlay.style.background = 'rgba(20, 30, 48, 0.8)'; // Darker, bluer mood
+        for(let i=0; i<100; i++) createParticle('rain-drop', envContainer);
+    } else if (cond.includes('clear') || cond.includes('sun')) {
+        overlay.style.background = 'rgba(255, 165, 0, 0.2)'; // Warm golden glow
+        for(let i=0; i<30; i++) createParticle('sun-mote', envContainer);
+    }
+}
+
+function createParticle(className, container) {
+    const p = document.createElement('div');
+    p.className = className;
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 1 + 0.5) + 's';
+    p.style.opacity = Math.random();
+    container.appendChild(p);
+}
+
 // Function to get real-time weather
 async function getWeather(lat, lng) {
     const url = `https://cse2004.com/api/weather?latitude=${lat}&longitude=${lng}`;
