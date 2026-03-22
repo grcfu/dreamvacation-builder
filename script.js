@@ -1,3 +1,5 @@
+//this is script.js
+
 // 1. UI Elements - Define these at the top!
 const startBtn = document.getElementById('start-adventure');
 const cityInput = document.getElementById('city-input');
