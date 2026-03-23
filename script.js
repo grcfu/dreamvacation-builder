@@ -173,7 +173,7 @@ function startFitCheck(choice, weather) {
                 <div class="color-btn" style="background: #ffffff;" onclick="setColor('#ffffff')"></div>
                 <div class="color-btn" style="background: #000000;" onclick="setColor('#000000')"></div>
                 <button id="clear-canvas">RESET</button>
-                <button id="start-adventure" onclick="generateFinalTicket()">FINISH TICKET</button>
+                <button id="start-adventure" onclick="generateFinalTicket(${JSON.stringify(choice).replace(/"/g, '&quot;')}, ${JSON.stringify(weather).replace(/"/g, '&quot;')}, '${cityInput.value}')">FINISH TICKET</button>
             </div>
         </div>
     `;
@@ -241,3 +241,61 @@ startBtn.addEventListener('click', async () => {
     startBtn.disabled = false;
     startBtn.innerText = "CHECK IN";
 });
+
+function generateFinalTicket(choice, weather, city) {
+    const canvas = document.getElementById('fit-canvas');
+    const outfitImage = canvas.toDataURL(); // Converts drawing to image
+
+    displayArea.innerHTML = `
+        <div class="ticket-container">
+            <div class="ticket">
+                <div class="ticket-main">
+                    <h4>Passenger Visa</h4>
+                    <h2>${city.toUpperCase()}</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4>Itinerary</h4>
+                        <p><strong>${choice.name}</strong></p>
+                        <p style="font-size: 0.8rem; opacity: 0.7;">${choice.description}</p>
+                    </div>
+
+                    <div style="display: flex; gap: 40px;">
+                        <div>
+                            <h4>Weather</h4>
+                            <p>${weather.temp}°F / ${weather.condition}</p>
+                        </div>
+                        <div>
+                            <h4>Gate</h4>
+                            <p>B19</p>
+                        </div>
+                    </div>
+                    
+                    <button class="share-btn" onclick="shareJourney()">SHARE JOURNEY</button>
+                </div>
+                
+                <div class="ticket-stub">
+                    <h4>Fit Check</h4>
+                    <img src="${outfitImage}" class="outfit-preview" alt="My Vacation Fit">
+                    <p style="font-size: 0.6rem; margin-top: 10px; color: #aaa;">PASSPORT VALIDATED</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Using the Web Share API (Bonus Browser API!)
+async function shareJourney() {
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: 'My Digital Passport',
+                text: 'Check out my dream vacation plans!',
+                url: window.location.href
+            });
+        } catch (err) {
+            console.log("Share cancelled or failed");
+        }
+    } else {
+        alert("Itinerary copied to clipboard!");
+    }
+}
