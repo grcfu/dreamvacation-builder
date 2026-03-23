@@ -8,6 +8,13 @@ const displayArea = document.getElementById('itinerary-display');
 // 2. Constants & API Config
 const OPENAI_KEY = 's2ef662dn2q2';
 
+// Global variable to store journey data across different steps
+let currentAdventure = {
+    city: '',
+    choice: null,
+    weather: null
+};
+
 const ADVENTURE_SCHEMA = {
   type: 'json_schema',
   name: 'adventure_options',
@@ -99,19 +106,21 @@ function displayAdventureOptions(options, coords) {
 }
 
 async function selectAdventure(choice, coords) {
-    console.log("Grace selected:", choice.name);
     displayArea.innerHTML = `<h2 class="loading-text">Preparing the atmosphere for ${choice.name}...</h2>`;
 
     const weather = await getWeather(coords.lat, coords.lng);
     
-    if (weather) {
-        triggerAtmosphericShift(weather.condition);
-        
-        // Wait 2 seconds for the "vibe" to settle, then start the fit check
-        setTimeout(() => {
-            startFitCheck(choice, weather); 
-        }, 2000);
-    }
+    // SAVE data to our global variable
+    currentAdventure.choice = choice;
+    currentAdventure.weather = weather;
+    currentAdventure.city = cityInput.value;
+
+    triggerAtmosphericShift(weather.condition);
+    
+    // Transition to the Fit Check after the "vibe" settles
+    setTimeout(() => {
+        startFitCheck(); 
+    }, 2000);
 }
 
 function triggerAtmosphericShift(condition) {
@@ -173,7 +182,7 @@ function startFitCheck(choice, weather) {
                 <div class="color-btn" style="background: #ffffff;" onclick="setColor('#ffffff')"></div>
                 <div class="color-btn" style="background: #000000;" onclick="setColor('#000000')"></div>
                 <button id="clear-canvas">RESET</button>
-                <button id="start-adventure" onclick="generateFinalTicket(${JSON.stringify(choice).replace(/"/g, '&quot;')}, ${JSON.stringify(weather).replace(/"/g, '&quot;')}, '${cityInput.value}')">FINISH TICKET</button>
+                <button id="finish-btn">FINISH TICKET</button>
             </div>
         </div>
     `;
@@ -193,6 +202,8 @@ function startFitCheck(choice, weather) {
     document.getElementById('clear-canvas').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     });
+
+    document.getElementById('finish-btn').addEventListener('click', generateFinalTicket);
 }
 
 function startDrawing(e) {
@@ -227,19 +238,26 @@ startBtn.addEventListener('click', async () => {
     const city = cityInput.value.trim();
     if (!city) return;
 
+    // Start the "Loading" state
     startBtn.disabled = true;
     startBtn.innerText = "PACKING BAGS...";
 
-    const coords = await getCoordinates(city);
-    if (coords) {
-        const options = await getAdventureOptions(city);
-        if (options) {
-            displayAdventureOptions(options, coords);
+    try {
+        const coords = await getCoordinates(city);
+        if (coords) {
+            const options = await getAdventureOptions(city);
+            if (options) {
+                displayAdventureOptions(options, coords);
+            }
         }
+    } catch (err) {
+        console.error("Critical Error:", err);
+        alert("Something went wrong with the flight. Please try again!");
+    } finally {
+        // This line is the guarantee: it runs even if the API fails
+        startBtn.disabled = false;
+        startBtn.innerText = "CHECK IN";
     }
-
-    startBtn.disabled = false;
-    startBtn.innerText = "CHECK IN";
 });
 
 function generateFinalTicket(choice, weather, city) {
