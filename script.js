@@ -100,20 +100,16 @@ function displayAdventureOptions(options, coords) {
 
 async function selectAdventure(choice, coords) {
     console.log("Grace selected:", choice.name);
-    
-    // 1. Clear the screen for the next phase
     displayArea.innerHTML = `<h2 class="loading-text">Preparing the atmosphere for ${choice.name}...</h2>`;
 
-    // 2. Fetch the weather
     const weather = await getWeather(coords.lat, coords.lng);
     
     if (weather) {
         triggerAtmosphericShift(weather.condition);
         
-        // 3. Move to the next step: The Fit Check (We will build this next!)
+        // Wait 2 seconds for the "vibe" to settle, then start the fit check
         setTimeout(() => {
-            // startFitCheck(choice, weather); 
-            displayArea.innerHTML = `<h2>It's ${weather.temp}°F and ${weather.condition}.</h2><p>Perfect for ${choice.name}.</p>`;
+            startFitCheck(choice, weather); 
         }, 2000);
     }
 }
@@ -160,6 +156,70 @@ async function getWeather(lat, lng) {
         console.error("Weather Error:", error);
         return null;
     }
+}
+
+let isDrawing = false;
+let ctx;
+
+function startFitCheck(choice, weather) {
+    displayArea.innerHTML = `
+        <div class="canvas-container">
+            <h2>Sketch Your Fit</h2>
+            <p>Design an outfit for ${choice.name} in ${weather.temp}°F weather.</p>
+            <canvas id="fit-canvas" width="400" height="500"></canvas>
+            <div class="controls">
+                <div class="color-btn" style="background: #ff4d4d;" onclick="setColor('#ff4d4d')"></div>
+                <div class="color-btn" style="background: #4d79ff;" onclick="setColor('#4d79ff')"></div>
+                <div class="color-btn" style="background: #ffffff;" onclick="setColor('#ffffff')"></div>
+                <div class="color-btn" style="background: #000000;" onclick="setColor('#000000')"></div>
+                <button id="clear-canvas">RESET</button>
+                <button id="start-adventure" onclick="generateFinalTicket()">FINISH TICKET</button>
+            </div>
+        </div>
+    `;
+
+    const canvas = document.getElementById('fit-canvas');
+    ctx = canvas.getContext('2d');
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+
+    // Drawing Logic
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+
+    document.getElementById('clear-canvas').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+}
+
+function startDrawing(e) {
+    isDrawing = true;
+    draw(e);
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+    const canvas = document.getElementById('fit-canvas');
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}
+
+function stopDrawing() {
+    isDrawing = false;
+    ctx.beginPath();
+}
+
+function setColor(color) {
+    ctx.strokeStyle = color;
 }
 
 // 4. The Main Event Listener
