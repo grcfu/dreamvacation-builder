@@ -1,4 +1,4 @@
-//thisisstyle.css
+/*this is style.css */
 
 /* =========================================
    STEP 1: THE FOUNDATION & LANDING
@@ -164,4 +164,58 @@ body {
 @keyframes drift {
     from { transform: translateY(100vh) translateX(0); }
     to { transform: translateY(-10vh) translateX(100px); }
+}
+
+/* =========================================
+   STEP 3: THE FIT CHECK (CANVAS)
+   ========================================= */
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeIn 1s ease;
+}
+
+#fit-canvas {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    cursor: crosshair;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    touch-action: none; /* Crucial for mobile drawing */
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 15px 25px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.color-btn {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-btn:hover { transform: scale(1.2); }
+
+#clear-canvas {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
