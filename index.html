@@ -3,52 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Passport | Adventure Builder</title>
+    <title>The Voyager Edit | Curated Travel Journals</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="scroll-container">
         
-        <section id="hero" class="full-page">
-            <div class="photobanner">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
-                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Mountains">
-                <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1000&q=80" alt="Forest">
-                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
-                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
-            </div>
+        <section id="hero-collage" class="full-page">
+            
+            <div class="editorial-intro-block">
+                <h4 class="issue-no">ISSUE NO. 01</h4>
+                <h1 class="logo">the voyager edit</h1>
+                <p class="intro-text">
+                    A digital journal for the aesthetic wanderer. 
+                    From hidden seafood boils in St. Louis to the 
+                    sun-drenched shores of Honolulu, we curate 
+                    high-vibe escapes that tell a story.
+                </p>
+                <div class="stamp-decoration">Approved</div>
 
-            <div class="overlay"></div>
-
-            <main id="passport-container">
-                <header>
-                    <h1 class="logo">DIGITAL PASSPORT</h1>
-                    <p>Where is your dream destination?</p>
-                </header>
-
-                <div class="glass-search">
-                    <input type="text" id="city-input" placeholder="Enter a city (e.g. Honolulu)">
+                <div class="entry-submission-overlay">
+                    <input type="text" id="city-input" placeholder="Where to next?">
                     <button id="start-adventure">CHECK IN</button>
                 </div>
-            </main>
+            </div>
+
+            <div class="divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+                </svg>
+            </div>
         </section>
 
         <section id="selection-section" class="full-page hidden">
-            <div id="itinerary-display" class="content-wrapper">
-                </div>
+            <div id="itinerary-display" class="content-wrapper"></div>
         </section>
 
         <section id="fit-section" class="full-page hidden">
-            <div id="canvas-area" class="content-wrapper">
-                </div>
+            <div id="canvas-area" class="content-wrapper"></div>
         </section>
 
         <section id="ticket-section" class="full-page hidden">
-            <div id="final-ticket-area" class="content-wrapper">
-                </div>
+            <div id="final-ticket-area" class="content-wrapper"></div>
         </section>
 
     </div>
