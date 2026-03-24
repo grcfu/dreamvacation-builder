@@ -1,5 +1,5 @@
 /* =========================================
-   1. CORE PALETTE (UPDATED) & TYPOGRAPHY
+   1. CORE PALETTE & TYPOGRAPHY
    ========================================= */
 :root {
     --crimson: #E52B50;
@@ -21,11 +21,7 @@ body {
     overflow: hidden; 
 }
 
-h1, h2, h3, .logo { 
-    font-family: 'DM Serif Display', serif; 
-    font-weight: 400;
-    line-height: 1;
-}
+h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 1; }
 
 /* =========================================
    2. SCROLL SNAP LOGIC
@@ -54,132 +50,124 @@ h1, h2, h3, .logo {
 .revealed { visibility: visible; opacity: 1; height: 100vh; pointer-events: all; transform: translateY(0); }
 
 /* =========================================
-   3. THE HERO MASTERPIECE (BACKGROUND IMAGE)
+   3. HERO MASTERPIECE
    ========================================= */
 #hero-collage {
     background: url('hero-bg.jpg') no-repeat center center;
     background-size: cover;
 }
 
-/* THE EDITORIAL INTRO BLOCK (LEFT SIDE - BIGGER) */
 .editorial-intro-block {
     position: absolute;
-    top: 10%;
-    left: 8%;
-    max-width: 550px; /* Made bigger as requested */
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    padding: 60px;
-    border: 1px solid rgba(12, 25, 17, 0.1);
-    box-shadow: 20px 20px 0px var(--olive-lime); /* Updated to Olive Lime */
+    top: 8%;
+    left: 6%;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    padding: 70px;
+    border: 1.5px solid rgba(12, 25, 17, 0.1);
+    box-shadow: 25px 25px 0px var(--olive-lime);
     text-align: left;
     z-index: 10;
 }
 
-.issue-no {
-    font-size: 0.75rem;
-    letter-spacing: 5px;
-    margin-bottom: 15px;
-    color: var(--plum);
-    opacity: 0.6;
-}
+.logo { font-size: 5.5rem; color: var(--crimson); margin-bottom: 20px; text-transform: lowercase; }
+.intro-text { font-size: 1.15rem; line-height: 1.8; margin-bottom: 40px; color: var(--forest-green); }
 
-.logo {
-    font-size: 5rem;
-    color: var(--crimson); /* Updated to Crimson */
-    margin-bottom: 25px;
-    text-transform: lowercase;
-}
-
-.intro-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 30px;
-    color: var(--forest-green);
-}
-
-.stamp-decoration {
-    display: inline-block;
-    border: 2px solid var(--crimson);
-    color: var(--crimson);
-    padding: 8px 20px;
-    font-family: 'DM Serif Display';
-    text-transform: uppercase;
-    transform: rotate(-8deg);
-    font-size: 0.9rem;
-    margin-bottom: 30px;
-}
-
-/* SEARCH BAR (NOW PINNED TO BLOCK) */
 .entry-submission-overlay {
     display: flex;
     background: white;
-    padding: 8px;
+    padding: 10px;
     border-radius: 100px;
-    border: 2px solid var(--forest-green);
-    box-shadow: 8px 8px 0px var(--teal); /* Updated to Teal */
+    border: 3px solid var(--forest-green);
+    box-shadow: 8px 8px 0px var(--teal);
     width: 100%;
 }
 
-#city-input {
-    background: transparent; border: none; outline: none;
-    padding: 10px 20px; font-size: 1.1rem; width: 70%;
-    color: var(--forest-green);
-}
-
-#start-adventure {
-    background: var(--forest-green);
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 100px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-#start-adventure:hover {
-    background: var(--plum);
-}
+#city-input { background: transparent; border: none; outline: none; padding: 10px 20px; font-size: 1.1rem; flex: 1; color: var(--forest-green); }
+#start-adventure { background: var(--forest-green); color: white; border: none; padding: 12px 35px; border-radius: 100px; font-weight: 700; cursor: pointer; }
 
 /* =========================================
-   4. POLAROID CARDS & UI
+   4. SECTION 2: VINTAGE ITINERARY
    ========================================= */
-.content-wrapper { width: 100%; max-width: 1200px; padding: 40px; }
-
-.adventure-card {
-    background: white; padding: 15px 15px 60px 15px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    width: 300px; cursor: pointer; transition: 0.4s;
-    border: 1px solid #ddd; transform: rotate(var(--rotation));
+#selection-section {
+    /* 🖼️ PASTE YOUR PINTEREST BACKGROUND ADDRESS HERE */
+    background: url('https://i.pinimg.com/1200x/37/fd/b1/37fdb107656e4410de351b2104cbf570.jpg') no-repeat center center;
+    background-size: cover;
 }
 
-.adventure-card:hover { 
-    transform: rotate(0deg) translateY(-20px); 
-    border-color: var(--crimson);
-    box-shadow: 0 30px 60px rgba(229, 43, 80, 0.2);
+.itinerary-container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; gap: 50px; z-index: 2; }
+
+.itinerary-postcard {
+    background: #fdfaf0;
+    padding: 40px;
+    width: 85%;
+    box-shadow: 15px 15px 40px rgba(0,0,0,0.3);
+    border: 1px solid #eee;
+    transform: rotate(-1deg);
+    text-align: center;
 }
 
+.itinerary-postcard h2 { font-size: 3.5rem; color: var(--plum); margin-bottom: 10px; }
+.itinerary-postcard p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--forest-green); max-width: 600px; margin: 0 auto; }
+
+.stamps-row { display: flex; gap: 30px; justify-content: center; perspective: 1200px; }
+
+.stamp-card { width: 260px; height: 340px; cursor: pointer; position: relative; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
+.stamp-card:hover { transform: rotateY(180deg); }
+
+.stamp-front, .stamp-back {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border: 12px solid white;
+    box-shadow: 8px 8px 20px rgba(0,0,0,0.2);
+    outline: 2px dashed #ccc;
+    outline-offset: -18px;
+}
+
+.stamp-front { display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+.stamp-overlay { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); transition: 0.3s; }
+.stamp-front:hover .stamp-overlay { background: rgba(0, 0, 0, 0.7); }
+
+.stamp-front h3 { position: relative; color: white; z-index: 2; text-align: center; padding: 25px; font-size: 1.6rem; letter-spacing: 1px; }
+
+.stamp-back {
+    background: #fff;
+    color: var(--deep-black);
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    justify-content: center;
+}
+
+.choose-btn {
+    background: var(--crimson);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+.choose-btn:hover { background: var(--deep-black); }
+
+/* =========================================
+   5. CANVAS & TICKET
+   ========================================= */
 .canvas-container { 
     background: white; 
     padding: 40px; 
     border: 4px dashed var(--olive-lime); 
-    box-shadow: 15px 15px 0 var(--off-white), 15px 15px 0 2px var(--plum);
+    box-shadow: 20px 20px 0 var(--plum); 
 }
-
-#fit-canvas { background: #fdfdfd; border: 1px solid #eee; }
-
-.ticket {
-    background: white; border: 3px solid var(--forest-green); width: 700px;
-    display: flex; box-shadow: 25px 25px 0 var(--teal);
-}
-
-.divider { position: absolute; bottom: 0; left: 0; width: 100%; line-height: 0; z-index: 5; }
-.divider svg { height: 100px; width: 100%; }
+.ticket { background: white; border: 3px solid var(--forest-green); width: 720px; display: flex; box-shadow: 30px 30px 0 var(--teal); }
 .shape-fill { fill: var(--off-white); }
 
 #environment-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
 .rain-drop { position: absolute; background: var(--sky-blue); width: 2px; height: 20px; animation: fall linear infinite; }
-.sun-mote { position: absolute; background: var(--crimson); border-radius: 50%; width: 10px; height: 10px; opacity: 0.4; animation: drift linear infinite; }
+.sun-mote { position: absolute; background: var(--crimson); border-radius: 50%; width: 12px; height: 12px; opacity: 0.3; animation: drift linear infinite; }
 @keyframes fall { to { transform: translateY(110vh); } }
-@keyframes drift { to { transform: translateY(-10vh) translateX(50px); } }
+@keyframes drift { to { transform: translateY(-10vh) translateX(60px); } }
