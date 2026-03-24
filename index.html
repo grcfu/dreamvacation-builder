@@ -1,33 +1,60 @@
-<!--this is index.html -->
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Passport | Adventure Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
+</head>
 <body>
-    <div class="hero-section">
-        <div class="photobanner">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
-            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
-            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Mountains">
-            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1000&q=80" alt="Forest">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
-            <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
-        </div>
 
-        <div class="overlay"></div>
+    <div class="scroll-container">
+        
+        <section id="hero" class="full-page">
+            <div class="photobanner">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
+                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=80" alt="Mountains">
+                <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1000&q=80" alt="Forest">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80" alt="Beach">
+                <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1000&q=80" alt="City">
+            </div>
 
-        <main id="passport-container">
-            <header>
-                <h1 class="logo">DIGITAL PASSPORT</h1>
-                <p>Where is your dream destination?</p>
-            </header>
+            <div class="overlay"></div>
 
-            <section id="step-1" class="step">
+            <main id="passport-container">
+                <header>
+                    <h1 class="logo">DIGITAL PASSPORT</h1>
+                    <p>Where is your dream destination?</p>
+                </header>
+
                 <div class="glass-search">
                     <input type="text" id="city-input" placeholder="Enter a city (e.g. Honolulu)">
                     <button id="start-adventure">CHECK IN</button>
                 </div>
-            </section>
+            </main>
+        </section>
 
-            <div id="itinerary-display"></div>
-        </main>
+        <section id="selection-section" class="full-page hidden">
+            <div id="itinerary-display" class="content-wrapper">
+                </div>
+        </section>
+
+        <section id="fit-section" class="full-page hidden">
+            <div id="canvas-area" class="content-wrapper">
+                </div>
+        </section>
+
+        <section id="ticket-section" class="full-page hidden">
+            <div id="final-ticket-area" class="content-wrapper">
+                </div>
+        </section>
+
     </div>
+
+    <div id="environment-overlay"></div>
+
     <script src="script.js"></script>
 </body>
+</html>
