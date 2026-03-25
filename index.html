@@ -19,11 +19,8 @@
             <div class="editorial-intro-block">
                 <h4 class="issue-no">ISSUE NO. 01</h4>
                 <h2 class="section-title">Begin Your Next Story</h2>
-                <p class="intro-text">
-                    A digital journal for the aesthetic wanderer. 
-                    Choose where you want to begin your journey and we will curate the vibe.
-                </p>
-
+                <p class="intro-text">A digital journal for the aesthetic wanderer. Choose where you want to begin.</p>
+                
                 <div class="entry-submission-overlay">
                     <input type="text" id="city-input" placeholder="Where to next?">
                     <button id="start-adventure">CHECK IN</button>
@@ -38,7 +35,6 @@
 
                 <div class="stamp-decoration">Approved</div>
             </div>
-
             <div class="divider">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                     <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
@@ -51,9 +47,21 @@
         </section>
 
         <section id="fit-section" class="full-page hidden">
+            <div id="instruction-modal" class="modal-hidden">
+                <div class="modal-content">
+                    <button id="close-modal">&times;</button>
+                    <h4 style="color: var(--crimson); letter-spacing: 2px;">BOUTIQUE ACCESS</h4>
+                    <h3>Journal Entry 01</h3>
+                    <ul>
+                        <li>✨ Pick your 3 top essentials.</li>
+                        <li>🌸 Doodle some flowers in the journal.</li>
+                        <li>🛂 Finalize your boarding pass.</li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="fit-revamp-container">
-                <div id="outfit-picker-side">
-                    </div>
+                <div id="outfit-picker-side"></div>
                 <div id="canvas-journal-side">
                     <div id="canvas-area" class="content-wrapper"></div>
                 </div>
@@ -67,7 +75,6 @@
     </div>
 
     <div id="environment-overlay"></div>
-
     <script src="script.js"></script>
 </body>
 </html>

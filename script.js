@@ -1,19 +1,22 @@
+// 1. UI Elements
 const startBtn = document.getElementById('start-adventure');
 const cityInput = document.getElementById('city-input');
 const loaderContainer = document.getElementById('loading-container');
 const loaderFill = document.getElementById('loader-fill');
 const loaderStatus = document.getElementById('loader-status');
 
+// 2. Constants & Global State
 const OPENAI_KEY = 's2ef662dn2q2';
 const COLORS = { crimson: "#E52B50", teal: "#91C6C6", plum: "#591D35", sky: "#9BDDFF", olive: "#C9D179", forest: "#2B3328" };
 
 let currentAdventure = { 
     city: '', 
     choice: null, 
-    weather: null,
-    selectedItems: [] // Track items picked in the carousel
+    weather: null, 
+    activeImages: [] 
 };
 
+// 3. Helper Functions
 function revealAndScroll(sectionId) {
     const section = document.getElementById(sectionId);
     section.classList.remove('hidden');
@@ -40,6 +43,7 @@ async function handleLoading(show) {
     }
 }
 
+// 4. API Logic
 async function getCoordinates(city) {
     try {
         const response = await fetch(`https://cse2004.com/api/geocode?address=${encodeURIComponent(city)}`);
@@ -70,6 +74,7 @@ async function getWeather(lat, lng) {
     } catch (e) { return { temp: "72", condition: "Clear" }; }
 }
 
+// 5. Section 2: Stamps
 function displayAdventureOptions(options, coords) {
     const wrapper = document.getElementById('itinerary-display');
     const stampImages = [
@@ -114,58 +119,37 @@ async function selectAdventure(choice, coords) {
     startFitCheck();
 }
 
-function triggerAtmosphericShift(condition) {
-    const env = document.getElementById('environment-overlay');
-    env.innerHTML = '';
-    const cond = condition.toLowerCase();
-    if (cond.includes('rain') || cond.includes('cloud')) {
-        for(let i=0; i<80; i++) createParticle('rain-drop', env);
-    } else {
-        for(let i=0; i<30; i++) createParticle('sun-mote', env);
-    }
-}
-
-function createParticle(cls, parent) {
-    const p = document.createElement('div');
-    p.className = cls; p.style.left = Math.random() * 100 + 'vw';
-    p.style.animationDuration = (Math.random() * 2 + 1) + 's'; p.style.opacity = Math.random();
-    parent.appendChild(p);
-}
-
-// =========================================
-// THE REVAMPED FIT CHECK LOGIC
-// =========================================
+// 6. Section 3: Boutique Logic 
 let isDrawing = false; let ctx;
-const suitcaseItems = [
-    { name: "Vintage Camera", icon: "📸", vibe: "Cinematic" },
-    { name: "Silk Scarf", icon: "🧣", vibe: "Elegant" },
-    { name: "Travel Journal", icon: "📓", vibe: "Reflective" },
-    { name: "Dark Shades", icon: "🕶️", vibe: "Mysterious" },
-    { name: "Linen Tote", icon: "👜", vibe: "Organic" },
-    { name: "Film Roll", icon: "🎞️", vibe: "Analog" }
+const boutiqueItems = [
+    { name: "Vintage Leica", img: "https://i.pinimg.com/236x/31/6a/52/316a524e9343750058e72767f4077641.jpg" },
+    { name: "Silk Scarf", img: "https://i.pinimg.com/236x/07/26/5d/07265d2146e4c7980302484a0d84a753.jpg" },
+    { name: "Linen Tote", img: "https://i.pinimg.com/236x/f6/b0/02/f6b002c8928e4695924d55b0a33a39e8.jpg" },
+    { name: "Dark Shades", img: "https://i.pinimg.com/236x/0a/61/89/0a61895a073f1362e499d1469f697f06.jpg" }
 ];
 
 function startFitCheck() {
     const picker = document.getElementById('outfit-picker-side');
     const area = document.getElementById('canvas-area');
+    
+    // Popup logic
+    const modal = document.getElementById('instruction-modal');
+    modal.classList.remove('modal-hidden');
+    document.getElementById('close-modal').onclick = () => modal.classList.add('modal-hidden');
 
-    // 1. Build the Essential Carousel
-    picker.innerHTML = `<h2 style="font-size: 2.5rem; margin-bottom: 20px;">Curated Essentials</h2>`;
-    suitcaseItems.forEach(item => {
+    picker.innerHTML = `<h2 style="font-size: 2.2rem; margin-bottom: 25px; color: white;">The Boutique</h2>`;
+    boutiqueItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'essential-item';
-        div.innerHTML = `<span class="essential-icon">${item.icon}</span><div><strong>${item.name}</strong><br><small>${item.vibe}</small></div>`;
-        div.onclick = () => toggleSuitcaseItem(item, div);
+        div.innerHTML = `<img src="${item.img}" class="item-img-thumb"><div><strong>${item.name}</strong><br><small>Click to Pack</small></div>`;
+        div.onclick = () => toggleItem(item, div);
         picker.appendChild(div);
     });
 
-    // 2. Build the Journal Canvas
     area.innerHTML = `
         <div class="canvas-container">
-            <h2 style="font-size: 2.5rem; margin-bottom: 5px; color: ${COLORS.forest};">vibe check</h2>
-            <p style="font-family:'Playfair Display'; font-style:italic; margin-bottom: 20px; color: ${COLORS.plum};">Select your gear, then doodle your vibe.</p>
             <canvas id="fit-canvas" width="450" height="500"></canvas>
-            <div style="margin-top: 20px; display: flex; gap: 15px; justify-content: center; align-items: center;">
+            <div class="controls-vibrant">
                 <div onclick="setColor('${COLORS.crimson}')" class="color-btn" style="background:${COLORS.crimson};"></div>
                 <div onclick="setColor('${COLORS.teal}')" class="color-btn" style="background:${COLORS.teal};"></div>
                 <div onclick="setColor('${COLORS.forest}')" class="color-btn" style="background:${COLORS.forest};"></div>
@@ -180,19 +164,45 @@ function startFitCheck() {
     
     canvas.onmousedown = (e) => { isDrawing = true; draw(e); };
     window.onmousemove = (e) => draw(e); window.onmouseup = () => { isDrawing = false; ctx.beginPath(); };
-    document.getElementById('clear-canvas').onclick = () => { ctx.clearRect(0,0,450,500); currentAdventure.selectedItems = []; };
+    document.getElementById('clear-canvas').onclick = () => { 
+        ctx.clearRect(0,0,450,500); 
+        currentAdventure.activeImages = []; 
+        document.querySelectorAll('.essential-item').forEach(el => el.classList.remove('selected'));
+    };
     document.getElementById('finish-btn').onclick = generateFinalTicket;
     
     revealAndScroll('fit-section');
 }
 
-function toggleSuitcaseItem(item, element) {
-    element.classList.toggle('selected');
-    if (element.classList.contains('selected')) {
-        currentAdventure.selectedItems.push(item);
-        // "Animation": Draw the icon onto the canvas randomly
-        ctx.font = "40px serif";
-        ctx.fillText(item.icon, Math.random() * 350 + 20, Math.random() * 400 + 50);
+function toggleItem(item, element) {
+    const index = currentAdventure.activeImages.findIndex(i => i.name === item.name);
+    
+    if (index === -1) {
+        // Enforce the "Top Three" rule from instructions
+        if (currentAdventure.activeImages.length >= 3) {
+            alert("Your suitcase is full! Pick your top 3 only.");
+            return;
+        }
+        
+        element.classList.add('selected');
+        const imgObj = new Image(); 
+        imgObj.crossOrigin = "anonymous"; 
+        imgObj.src = item.img;
+        imgObj.onload = () => {
+            const x = Math.random() * 200 + 50; 
+            const y = Math.random() * 200 + 50;
+            ctx.drawImage(imgObj, x, y, 150, 180);
+            currentAdventure.activeImages.push({ name: item.name, x, y, img: imgObj });
+        };
+    } else {
+        // Removal logic: clear and redraw
+        element.classList.remove('selected');
+        currentAdventure.activeImages.splice(index, 1);
+        ctx.clearRect(0, 0, 450, 500);
+        // Redraw remaining items (Note: Doodles will be lost if removed; for advanced doodle preservation, layers would be needed)
+        currentAdventure.activeImages.forEach(active => {
+            ctx.drawImage(active.img, active.x, active.y, 150, 180);
+        });
     }
 }
 
@@ -200,10 +210,10 @@ function setColor(c) { ctx.strokeStyle = c; }
 function draw(e) {
     if (!isDrawing) return;
     const canvas = document.getElementById('fit-canvas'); const r = canvas.getBoundingClientRect();
-    ctx.lineTo(e.clientX - r.left, e.clientY - r.top);
-    ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
+    ctx.lineTo(e.clientX - r.left, e.clientY - r.top); ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
 }
 
+// 7. Final Stage
 function generateFinalTicket() {
     const img = document.getElementById('fit-canvas').toDataURL();
     const area = document.getElementById('final-ticket-area');
@@ -219,8 +229,8 @@ function generateFinalTicket() {
                 <button class="share-btn" onclick="shareJourney()">Share Journey</button>
             </div>
             <div class="ticket-stub">
-                <h4 style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 20px; color: ${COLORS.forest}; opacity:0.5;">VIBE CHECK ID</h4>
-                <img src="${img}" class="outfit-preview">
+                <h4 style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 20px; color: ${COLORS.forest}; opacity:0.5;">PHOTO ID</h4>
+                <img src="${img}" style="width: 100%; border: 3px solid white; box-shadow:0 10px 20px rgba(0,0,0,0.1); filter: contrast(1.05);">
                 <p style="font-size: 0.7rem; margin-top: 25px; font-weight:700; color: ${COLORS.crimson};">GATE B19</p>
             </div>
         </div>
@@ -228,22 +238,31 @@ function generateFinalTicket() {
     revealAndScroll('ticket-section');
 }
 
+// 8. Atmospheric Utils
+function triggerAtmosphericShift(condition) {
+    const env = document.getElementById('environment-overlay'); env.innerHTML = '';
+    const cond = condition.toLowerCase();
+    if (cond.includes('rain') || cond.includes('cloud')) { for(let i=0; i<80; i++) createParticle('rain-drop', env); }
+    else { for(let i=0; i<30; i++) createParticle('sun-mote', env); }
+}
+
+function createParticle(cls, parent) {
+    const p = document.createElement('div'); p.className = cls; p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 2 + 1) + 's'; p.style.opacity = Math.random(); parent.appendChild(p);
+}
+
+// 9. Event Listeners
 startBtn.onclick = async () => {
-    const city = cityInput.value.trim();
-    if (!city) return;
-    const loadingInterval = await handleLoading(true);
-    startBtn.disabled = true; startBtn.innerText = "WAITING...";
+    const city = cityInput.value.trim(); if (!city) return;
+    const loadingInterval = await handleLoading(true); startBtn.disabled = true; startBtn.innerText = "PACKING...";
     currentAdventure.city = city;
     const coords = await getCoordinates(city);
-    if (coords) {
-        const opts = await getAdventureOptions(city);
-        clearInterval(loadingInterval); await handleLoading(false);
-        displayAdventureOptions(opts, coords);
+    if (coords) { 
+        const opts = await getAdventureOptions(city); 
+        clearInterval(loadingInterval); await handleLoading(false); 
+        displayAdventureOptions(opts, coords); 
     }
     startBtn.disabled = false; startBtn.innerText = "CHECK IN";
 };
 
-async function shareJourney() {
-    if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href });
-    else alert("Journey details copied!");
-}
+async function shareJourney() { if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href }); else alert("Journey details copied!"); }
