@@ -178,9 +178,9 @@ function toggleItem(item, element) {
     const index = currentAdventure.activeImages.findIndex(i => i.name === item.name);
     
     if (index === -1) {
-        // Enforce the "Top Three" rule from instructions
+        // Limit to 3 items as per instructions
         if (currentAdventure.activeImages.length >= 3) {
-            alert("Your suitcase is full! Pick your top 3 only.");
+            alert("Your journal is full! Choose your top 3 essentials.");
             return;
         }
         
@@ -195,11 +195,14 @@ function toggleItem(item, element) {
             currentAdventure.activeImages.push({ name: item.name, x, y, img: imgObj });
         };
     } else {
-        // Removal logic: clear and redraw
+        // REMOVE LOGIC
         element.classList.remove('selected');
         currentAdventure.activeImages.splice(index, 1);
+        
+        // Clear and redraw ONLY the remaining images
+        // Note: Manual doodles (flowers) will still clear here. 
+        // To fix that perfectly, we redraw the active boutique items.
         ctx.clearRect(0, 0, 450, 500);
-        // Redraw remaining items (Note: Doodles will be lost if removed; for advanced doodle preservation, layers would be needed)
         currentAdventure.activeImages.forEach(active => {
             ctx.drawImage(active.img, active.x, active.y, 150, 180);
         });

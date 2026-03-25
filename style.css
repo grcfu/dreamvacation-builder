@@ -83,20 +83,38 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 }
 
 .editorial-intro-block {
-    position: absolute;
-    top: 18%; left: 8%;
-    max-width: 580px;
-    padding: 60px;
-    z-index: 10;
-    text-align: left;
-    background: rgba(255, 255, 255, 0.4); 
-    backdrop-filter: blur(20px) saturate(160%);
-    -webkit-backdrop-filter: blur(20px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 50px rgba(12, 25, 17, 0.2);
+    position: absolute; 
+    top: 55%; /* Centers it better vertically */
+    left: 8%; 
+    transform: translateY(-50%); /* Ensures perfect centering */
+    max-width: 580px; 
+    padding: 60px; 
+    z-index: 10; 
+    text-align: left; 
+    background: rgba(255, 255, 255, 0.45); 
+    backdrop-filter: blur(15px) saturate(180%); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 15px 35px rgba(12, 25, 17, 0.2); 
 }
 
-.section-title { font-size: 3.5rem; color: var(--crimson); margin-bottom: 25px; }
+.section-title {
+    font-size: 3.5rem;
+    color: var(--crimson);
+    line-height: 1.1;    /* Gives the lines room to breathe */
+    margin-top: 10px;
+    margin-bottom: 35px; /* Pushes the intro text down further */
+    letter-spacing: -1.5px;
+}
+
+.intro-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;    /* Increases readability and premium feel */
+    max-width: 90%;      /* Prevents the text from stretching too far */
+    margin-bottom: 40px; /* More space before the search bar */
+    color: var(--deep-black);
+    opacity: 0.9;
+}
 
 .entry-submission-overlay {
     display: flex;
@@ -140,6 +158,25 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 }
 
 .itinerary-postcard h2 { font-size: 4rem; color: var(--plum); margin-bottom: 15px; }
+
+/* THE "APPROVED" RUBBER STAMP LOOK */
+.stamp-decoration {
+    position: absolute;
+    bottom: -20px;   /* Let it hang slightly off the bottom edge */
+    left: 40px;
+    display: inline-block;
+    border: 4px double var(--crimson);
+    color: var(--crimson);
+    padding: 8px 20px;
+    font-family: 'DM Serif Display';
+    text-transform: uppercase;
+    transform: rotate(-12deg);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background: white; /* Give it a background so it covers the divider line */
+    z-index: 15;
+}
 
 .stamps-row { display: flex; gap: 35px; justify-content: center; perspective: 1500px; }
 
