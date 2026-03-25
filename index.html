@@ -9,24 +9,34 @@
 </head>
 <body>
 
+    <header id="main-header">
+        <h1 class="header-logo">the voyager edit</h1>
+    </header>
+
     <div class="scroll-container">
         
         <section id="hero-collage" class="full-page">
             <div class="editorial-intro-block">
                 <h4 class="issue-no">ISSUE NO. 01</h4>
-                <h1 class="logo">the voyager edit</h1>
+                <h2 class="section-title">Begin Your Next Story</h2>
                 <p class="intro-text">
                     A digital journal for the aesthetic wanderer. 
-                    From hidden seafood boils in St. Louis to the 
-                    sun-drenched shores of Honolulu, we curate 
-                    high-vibe escapes that tell a story.
+                    Choose where you want to begin your journey and we will curate the vibe.
                 </p>
-                <div class="stamp-decoration">Approved</div>
 
                 <div class="entry-submission-overlay">
                     <input type="text" id="city-input" placeholder="Where to next?">
                     <button id="start-adventure">CHECK IN</button>
                 </div>
+
+                <div id="loading-container" class="loader-hidden">
+                    <p id="loader-status">Consulting the archives...</p>
+                    <div class="glass-progress-track">
+                        <div id="loader-fill"></div>
+                    </div>
+                </div>
+
+                <div class="stamp-decoration">Approved</div>
             </div>
 
             <div class="divider">
@@ -41,7 +51,13 @@
         </section>
 
         <section id="fit-section" class="full-page hidden">
-            <div id="canvas-area" class="content-wrapper"></div>
+            <div class="fit-revamp-container">
+                <div id="outfit-picker-side">
+                    </div>
+                <div id="canvas-journal-side">
+                    <div id="canvas-area" class="content-wrapper"></div>
+                </div>
+            </div>
         </section>
 
         <section id="ticket-section" class="full-page hidden">
@@ -51,6 +67,7 @@
     </div>
 
     <div id="environment-overlay"></div>
+
     <script src="script.js"></script>
 </body>
 </html>

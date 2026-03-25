@@ -8,7 +8,7 @@
     --off-white: #E5E4E3;
     --sky-blue: #9BDDFF;
     --olive-lime: #C9D179;
-    --forest-green: #2B3328;
+    --forest-green: #2B3328; 
     --deep-black: #0C1911;
 }
 
@@ -21,153 +21,155 @@ body {
     overflow: hidden; 
 }
 
-h1, h2, h3, .logo { font-family: 'DM Serif Display', serif; font-weight: 400; line-height: 1; }
+h1, h2, h3, h4, .logo, .header-logo, .section-title { 
+    font-family: 'DM Serif Display', serif; 
+    font-weight: 400;
+    line-height: 1.1;
+}
 
 /* =========================================
    2. SCROLL SNAP LOGIC
    ========================================= */
-.scroll-container {
-    height: 100vh;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-}
-
-.full-page {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 1s, transform 1s, visibility 1s;
-    overflow: hidden;
-}
-
+.scroll-container { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+.full-page { position: relative; width: 100vw; height: 100vh; scroll-snap-align: start; display: flex; align-items: center; justify-content: center; transition: opacity 1s, transform 1s, visibility 1s; overflow: hidden; }
 .hidden { visibility: hidden; opacity: 0; height: 0; pointer-events: none; transform: translateY(100px); }
 .revealed { visibility: visible; opacity: 1; height: 100vh; pointer-events: all; transform: translateY(0); }
 
 /* =========================================
-   3. HERO MASTERPIECE
+   3. PERSISTENT HEADER
    ========================================= */
-#hero-collage {
-    background: url('hero-bg.jpg') no-repeat center center;
-    background-size: cover;
+#main-header { position: fixed; top: 0; left: 0; width: 100%; background-color: var(--forest-green); padding: 20px 8%; z-index: 1000; }
+.header-logo { font-size: 2.2rem; color: var(--off-white); text-transform: lowercase; letter-spacing: -1px; }
+
+/* =========================================
+   4. THE HERO (GLASSMORPHISM)
+   ========================================= */
+#hero-collage { background: url('hero-bg.jpg') no-repeat center center; background-size: cover; }
+.editorial-intro-block { position: absolute; top: 18%; left: 8%; max-width: 580px; padding: 60px; z-index: 10; text-align: left; background: rgba(255, 255, 255, 0.45); backdrop-filter: blur(15px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 15px 35px rgba(12, 25, 17, 0.2); }
+.issue-no { font-size: 0.75rem; letter-spacing: 5px; margin-bottom: 15px; color: var(--plum); opacity: 0.7; }
+.section-title { font-size: 3.5rem; color: var(--crimson); margin-bottom: 25px; }
+.intro-text { font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px; }
+
+.entry-submission-overlay { display: flex; background: white; padding: 10px; border-radius: 100px; border: 2.5px solid var(--forest-green); box-shadow: 8px 8px 0px var(--teal); width: 100%; }
+#city-input { background: transparent; border: none; outline: none; padding: 10px 20px; font-size: 1.1rem; flex: 1; color: var(--forest-green); }
+#start-adventure { background: var(--forest-green); color: white; border: none; padding: 12px 30px; border-radius: 100px; font-weight: 700; cursor: pointer; }
+
+/* LOADING BAR */
+#loading-container { margin-top: 30px; }
+.loader-hidden { display: none; }
+#loader-status { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; margin-bottom: 10px; color: var(--plum); }
+.glass-progress-track { width: 100%; height: 12px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2); }
+#loader-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--teal), var(--olive-lime)); border-radius: 20px; transition: width 0.4s ease; }
+
+.stamp-decoration { display: inline-block; border: 2px solid var(--crimson); color: var(--crimson); padding: 8px 20px; font-family: 'DM Serif Display'; text-transform: uppercase; transform: rotate(-8deg); font-size: 0.9rem; margin-top: 30px; }
+
+/* =========================================
+   5. SECTION 2: VINTAGE ITINERARY (STAMPS)
+   ========================================= */
+#selection-section { background: url('https://i.pinimg.com/1200x/37/fd/b1/37fdb107656e4410de351b2104cbf570.jpg') no-repeat center center; background-size: cover; }
+.itinerary-container { width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center; gap: 50px; z-index: 2; }
+.itinerary-postcard { background: #fdfaf0; padding: 40px; width: 85%; box-shadow: 15px 15px 40px rgba(0,0,0,0.3); border: 1px solid #eee; transform: rotate(-1deg); text-align: center; }
+.itinerary-postcard h2 { font-size: 4rem; color: var(--plum); margin-bottom: 10px; }
+.itinerary-postcard p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: var(--forest-green); }
+.stamps-row { display: flex; gap: 30px; justify-content: center; perspective: 1200px; }
+.stamp-card { width: 260px; height: 340px; cursor: pointer; position: relative; transition: transform 0.8s; transform-style: preserve-3d; }
+.stamp-card:hover { transform: rotateY(180deg); }
+.stamp-front, .stamp-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border: 12px solid white; box-shadow: 8px 8px 20px rgba(0,0,0,0.2); outline: 2px dashed #ccc; outline-offset: -18px; }
+.stamp-front { display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
+.stamp-overlay { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); }
+.stamp-front h3 { position: relative; color: white; z-index: 2; text-align: center; padding: 25px; font-size: 1.6rem; }
+.stamp-back { background: #fff; color: var(--deep-black); transform: rotateY(180deg); display: flex; flex-direction: column; padding: 30px; justify-content: center; }
+.choose-btn { background: var(--crimson); color: white; border: none; padding: 12px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 15px; }
+
+/* =========================================
+   6. SECTION 3: THE REVAMPED FIT CHECK
+   ========================================= */
+.fit-revamp-container {
+    display: flex;
+    width: 90%;
+    max-width: 1300px;
+    height: 75vh;
+    gap: 40px;
 }
 
-.editorial-intro-block {
+/* LEFT SIDE: CAROUSEL STACK */
+#outfit-picker-side {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scrollbar-width: none;
+}
+
+.essential-item {
+    background: white;
+    padding: 20px;
+    border: 2px solid var(--forest-green);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 8px 8px 0 var(--teal);
+}
+
+.essential-item:hover { transform: translateX(10px); background: var(--off-white); }
+.essential-item.selected { background: var(--crimson); color: white; border-color: var(--deep-black); transform: scale(1.05); }
+
+.essential-icon { font-size: 2.5rem; }
+
+/* RIGHT SIDE: JOURNAL CANVAS */
+#canvas-journal-side { flex: 1.5; display: flex; flex-direction: column; align-items: center; }
+
+.canvas-container { 
+    background: #fdfaf0; 
+    padding: 30px; 
+    border: 1px solid #ddd;
+    box-shadow: 15px 15px 40px rgba(0,0,0,0.1);
+    position: relative;
+    transform: rotate(1deg);
+}
+
+.canvas-container::before {
+    content: "VOYAGER JOURNAL";
     position: absolute;
-    top: 8%;
-    left: 6%;
-    max-width: 600px;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(10px);
-    padding: 70px;
-    border: 1.5px solid rgba(12, 25, 17, 0.1);
-    box-shadow: 25px 25px 0px var(--olive-lime);
-    text-align: left;
+    top: -15px; left: 20px;
+    background: var(--forest-green);
+    color: white;
+    padding: 5px 15px;
+    font-family: 'DM Serif Display';
+    font-size: 0.8rem;
     z-index: 10;
 }
 
-.logo { font-size: 5.5rem; color: var(--crimson); margin-bottom: 20px; text-transform: lowercase; }
-.intro-text { font-size: 1.15rem; line-height: 1.8; margin-bottom: 40px; color: var(--forest-green); }
-
-.entry-submission-overlay {
-    display: flex;
-    background: white;
-    padding: 10px;
-    border-radius: 100px;
-    border: 3px solid var(--forest-green);
-    box-shadow: 8px 8px 0px var(--teal);
-    width: 100%;
+#fit-canvas { 
+    background: transparent; 
+    border: 2px dashed rgba(0,0,0,0.1);
+    cursor: crosshair;
 }
 
-#city-input { background: transparent; border: none; outline: none; padding: 10px 20px; font-size: 1.1rem; flex: 1; color: var(--forest-green); }
-#start-adventure { background: var(--forest-green); color: white; border: none; padding: 12px 35px; border-radius: 100px; font-weight: 700; cursor: pointer; }
+.color-btn { width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; cursor: pointer; transition: 0.2s; }
+.color-btn:hover { transform: scale(1.2); }
+
+#clear-canvas, #finish-btn { padding: 10px 25px; border-radius: 100px; font-weight: 700; text-transform: uppercase; cursor: pointer; border: 2px solid var(--forest-green); }
+#finish-btn { background: var(--forest-green); color: white; }
 
 /* =========================================
-   4. SECTION 2: VINTAGE ITINERARY
+   7. SECTION 4: TICKET
    ========================================= */
-#selection-section {
-    /* 🖼️ PASTE YOUR PINTEREST BACKGROUND ADDRESS HERE */
-    background: url('https://i.pinimg.com/1200x/37/fd/b1/37fdb107656e4410de351b2104cbf570.jpg') no-repeat center center;
-    background-size: cover;
-}
+.ticket { background: white; border: 3px solid var(--forest-green); width: 720px; display: flex; box-shadow: 30px 30px 0 var(--teal); position: relative; overflow: hidden; }
+.ticket::after { content: 'ISSUE NO. 01'; position: absolute; top: 10px; right: 10px; font-size: 0.5rem; letter-spacing: 2px; color: var(--forest-green); opacity: 0.3; }
 
-.itinerary-container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; gap: 50px; z-index: 2; }
+.ticket-main { padding: 50px; flex: 2; border-right: 3px dashed #eee; text-align: left; }
+.ticket-stub { padding: 50px; flex: 1; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.outfit-preview { width: 100%; border: 3px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.1); filter: contrast(1.05); margin-bottom: 10px; }
+.share-btn { background: var(--deep-black); color: white; border: none; padding: 15px 35px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
 
-.itinerary-postcard {
-    background: #fdfaf0;
-    padding: 40px;
-    width: 85%;
-    box-shadow: 15px 15px 40px rgba(0,0,0,0.3);
-    border: 1px solid #eee;
-    transform: rotate(-1deg);
-    text-align: center;
-}
-
-.itinerary-postcard h2 { font-size: 3.5rem; color: var(--plum); margin-bottom: 10px; }
-.itinerary-postcard p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--forest-green); max-width: 600px; margin: 0 auto; }
-
-.stamps-row { display: flex; gap: 30px; justify-content: center; perspective: 1200px; }
-
-.stamp-card { width: 260px; height: 340px; cursor: pointer; position: relative; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
-.stamp-card:hover { transform: rotateY(180deg); }
-
-.stamp-front, .stamp-back {
-    position: absolute;
-    width: 100%; height: 100%;
-    backface-visibility: hidden;
-    border: 12px solid white;
-    box-shadow: 8px 8px 20px rgba(0,0,0,0.2);
-    outline: 2px dashed #ccc;
-    outline-offset: -18px;
-}
-
-.stamp-front { display: flex; align-items: center; justify-content: center; background-size: cover; background-position: center; }
-.stamp-overlay { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.55); transition: 0.3s; }
-.stamp-front:hover .stamp-overlay { background: rgba(0, 0, 0, 0.7); }
-
-.stamp-front h3 { position: relative; color: white; z-index: 2; text-align: center; padding: 25px; font-size: 1.6rem; letter-spacing: 1px; }
-
-.stamp-back {
-    background: #fff;
-    color: var(--deep-black);
-    transform: rotateY(180deg);
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    justify-content: center;
-}
-
-.choose-btn {
-    background: var(--crimson);
-    color: white;
-    border: none;
-    padding: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: 0.3s;
-}
-.choose-btn:hover { background: var(--deep-black); }
-
-/* =========================================
-   5. CANVAS & TICKET
-   ========================================= */
-.canvas-container { 
-    background: white; 
-    padding: 40px; 
-    border: 4px dashed var(--olive-lime); 
-    box-shadow: 20px 20px 0 var(--plum); 
-}
-.ticket { background: white; border: 3px solid var(--forest-green); width: 720px; display: flex; box-shadow: 30px 30px 0 var(--teal); }
 .shape-fill { fill: var(--off-white); }
-
 #environment-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
 .rain-drop { position: absolute; background: var(--sky-blue); width: 2px; height: 20px; animation: fall linear infinite; }
-.sun-mote { position: absolute; background: var(--crimson); border-radius: 50%; width: 12px; height: 12px; opacity: 0.3; animation: drift linear infinite; }
+.sun-mote { position: absolute; background: var(--crimson); border-radius: 50%; width: 10px; height: 10px; opacity: 0.3; animation: drift linear infinite; }
 @keyframes fall { to { transform: translateY(110vh); } }
 @keyframes drift { to { transform: translateY(-10vh) translateX(60px); } }
