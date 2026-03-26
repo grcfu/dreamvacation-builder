@@ -24,25 +24,59 @@ function revealAndScroll(sectionId) {
     setTimeout(() => { section.scrollIntoView({ behavior: 'smooth' }); }, 50);
 }
 
+// NEW: Optimized Loading Animation Logic
 async function handleLoading(show) {
     if (show) {
         loaderContainer.classList.remove('loader-hidden');
-        const phrases = ["Consulting the archives...", "Analyzing local vibes...", "Scouting hidden gems...", "Preparing stamps..."];
-        let progress = 0; let pIdx = 0;
+        const phrases = [
+            "Consulting the Voyager archives...",
+            "Analyzing local vibes...",
+            "Scouting hidden aesthetic gems...",
+            "Preparing your vintage stamps...",
+            "Securing your boarding pass..."
+        ];
+        
+        let progress = 0;
+        let phraseIndex = 0;
+        let tickCount = 0; // This will track how many times the interval has run
+
+        // Initially set the first phrase
+        loaderStatus.innerText = phrases[0];
+
         const interval = setInterval(() => {
-            progress += Math.random() * 12;
+            // 1. Smooth Bar Movement
+            // We update this every 150ms so the bar doesn't look laggy
+            progress += Math.random() * 1.5; 
             if (progress > 95) progress = 95;
             loaderFill.style.width = `${progress}%`;
-            loaderStatus.innerText = phrases[pIdx];
-            pIdx = (pIdx + 1) % phrases.length;
-        }, 700);
+
+            // 2. Slow Text Changes
+            // We only change the text every 18 ticks (approx. every 2.7 seconds)
+            tickCount++;
+            if (tickCount >= 18) {
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                loaderStatus.style.opacity = 0; // Brief fade out for aesthetics
+                
+                setTimeout(() => {
+                    loaderStatus.innerText = phrases[phraseIndex];
+                    loaderStatus.style.opacity = 1;
+                }, 300);
+                
+                tickCount = 0; // Reset counter for the next phrase
+            }
+
+        }, 150); // Faster interval makes the progress bar move much smoother
+
         return interval;
     } else {
+        // Finishing state
         loaderFill.style.width = "100%";
-        setTimeout(() => { loaderContainer.classList.add('loader-hidden'); loaderFill.style.width = "0%"; }, 400);
+        setTimeout(() => {
+            loaderContainer.classList.add('loader-hidden');
+            loaderFill.style.width = "0%";
+        }, 500);
     }
 }
-
 // 4. API Logic
 async function getCoordinates(city) {
     try {
