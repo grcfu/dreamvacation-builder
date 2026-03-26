@@ -128,20 +128,27 @@ function displayAdventureOptions(options, coords) {
 
     const row = wrapper.querySelector('.stamps-row');
     options.forEach((opt, i) => {
-        const card = document.createElement('div');
-        card.className = 'stamp-card';
-        card.innerHTML = `
-            <div class="stamp-front" style="background-image: url('${stampImages[i]}')">
-                <div class="stamp-overlay"></div><h3>${opt.name}</h3>
-            </div>
-            <div class="stamp-back">
-                <h4 style="color:${COLORS.crimson}; font-size:0.75rem; font-weight:700;">${opt.vibe.toUpperCase()}</h4>
-                <p style="color:#444; font-size:0.9rem;">${opt.description}</p>
-                <button class="choose-btn">Choose Me</button>
+        const wrapper = document.createElement('div');
+        wrapper.className = 'stamp-wrapper'; // This is our new "Hitbox"
+        wrapper.innerHTML = `
+            <div class="stamp-card">
+                <div class="stamp-front" style="background-image: url('${stampImages[i]}')">
+                    <div class="stamp-overlay"></div>
+                    <h3>${opt.name}</h3>
+                </div>
+                <div class="stamp-back">
+                    <h4 style="color:${COLORS.crimson}; font-size:0.75rem; font-weight:700;">${opt.vibe.toUpperCase()}</h4>
+                    <p style="color:${COLORS.forestGreen}; font-size:0.95rem;">${opt.description}</p>
+                    <button class="choose-btn">Choose Me</button>
+                </div>
             </div>
         `;
-        card.querySelector('.choose-btn').onclick = (e) => { e.stopPropagation(); selectAdventure(opt, coords); };
-        row.appendChild(card);
+        
+        wrapper.querySelector('.choose-btn').onclick = (e) => {
+            e.stopPropagation();
+            selectAdventure(opt, coords);
+        };
+        row.appendChild(wrapper);
     });
     revealAndScroll('selection-section');
 }
@@ -156,10 +163,10 @@ async function selectAdventure(choice, coords) {
 // 6. Section 3: Boutique Logic 
 let isDrawing = false; let ctx;
 const boutiqueItems = [
-    { name: "Vintage Leica", img: "https://i.pinimg.com/236x/31/6a/52/316a524e9343750058e72767f4077641.jpg" },
-    { name: "Silk Scarf", img: "https://i.pinimg.com/236x/07/26/5d/07265d2146e4c7980302484a0d84a753.jpg" },
-    { name: "Linen Tote", img: "https://i.pinimg.com/236x/f6/b0/02/f6b002c8928e4695924d55b0a33a39e8.jpg" },
-    { name: "Dark Shades", img: "https://i.pinimg.com/236x/0a/61/89/0a61895a073f1362e499d1469f697f06.jpg" }
+    { name: "Vintage Leica", img: "https://i.pinimg.com/736x/0e/0b/8b/0e0b8be24ac8a8e35ea909d74eed21cb.jpg" },
+    { name: "Silk Scarf", img: "https://i.pinimg.com/736x/1e/aa/4e/1eaa4e697dd0f6b3959637d347e3d648.jpg" },
+    { name: "Linen Tote", img: "https://i.pinimg.com/1200x/87/94/4b/87944b0a7e8d081f51953efe89a75aff.jpg" },
+    { name: "Dark Shades", img: "https://i.pinimg.com/1200x/05/5d/84/055d84e7e3f0bf198fea6bbf4fdece58.jpg" }
 ];
 
 function startFitCheck() {

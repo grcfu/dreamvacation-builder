@@ -83,37 +83,39 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 }
 
 .editorial-intro-block {
-    position: absolute; 
-    top: 55%; /* Centers it better vertically */
-    left: 8%; 
-    transform: translateY(-50%); /* Ensures perfect centering */
-    max-width: 580px; 
-    padding: 60px; 
-    z-index: 10; 
-    text-align: left; 
-    background: rgba(255, 255, 255, 0.45); 
-    backdrop-filter: blur(15px) saturate(180%); 
-    border: 1px solid rgba(255, 255, 255, 0.3); 
-    box-shadow: 0 15px 35px rgba(12, 25, 17, 0.2); 
+    position: absolute;
+    top: 55%;
+    left: 8%;
+    transform: translateY(-50%);
+    max-width: 580px;
+    padding: 70px 60px; /* More vertical padding for an airy feel */
+    z-index: 10;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.4); 
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 30px 60px rgba(12, 25, 17, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Automatically spaces elements out evenly */
 }
 
 .section-title {
-    font-size: 3.5rem;
+    font-size: 4rem; /* Slightly larger for impact */
     color: var(--crimson);
-    line-height: 1.1;    /* Gives the lines room to breathe */
-    margin-top: 10px;
-    margin-bottom: 35px; /* Pushes the intro text down further */
-    letter-spacing: -1.5px;
+    line-height: 1;
+    margin: 10px 0 25px 0;
+    letter-spacing: -2px;
 }
 
 .intro-text {
     font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1.8;    /* Increases readability and premium feel */
     max-width: 90%;      /* Prevents the text from stretching too far */
     margin-bottom: 40px; /* More space before the search bar */
     color: var(--deep-black);
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .entry-submission-overlay {
@@ -141,16 +143,26 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
    5. SECTION 2: VINTAGE STAMPS (3D FLIP)
    ========================================= */
 #selection-section {
-    background: url('https://i.pinimg.com/1200x/37/fd/b1/37fdb107656e4410de351b2104cbf570.jpg') no-repeat center center;
+    background: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), 
+                url('https://i.pinimg.com/1200x/37/fd/b1/37fdb107656e4410de351b2104cbf570.jpg') no-repeat center center;
     background-size: cover;
+    background-attachment: fixed; /* THE PARALLAX MAGIC */
 }
 
-.itinerary-container { width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center; gap: 50px; z-index: 2; }
+.itinerary-container { 
+    width: 95%; /* Increased from 100% */
+    max-width: 1350px; /* Increased from 1100px */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 40px; 
+    z-index: 2; 
+}
 
 .itinerary-postcard {
     background: var(--paper);
-    padding: 50px;
-    width: 85%;
+    padding: 60px; /* Increased padding */
+    width: 90%;    /* Increased width */
     box-shadow: 20px 20px 60px rgba(0,0,0,0.4);
     border: 1px solid #ddd;
     transform: rotate(-1.5deg);
@@ -180,15 +192,23 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 
 .stamps-row { display: flex; gap: 35px; justify-content: center; perspective: 1500px; }
 
-.stamp-card {
-    width: 270px; height: 350px;
-    cursor: pointer;
+.stamp-wrapper {
+    width: 340px;  /* The physical width of your card */
+    height: 480px; /* The physical height of your card */
     position: relative;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stamp-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
 }
 
-.stamp-card:hover { transform: rotateY(180deg) scale(1.05); }
+.stamp-wrapper:hover .stamp-card {
+    transform: rotateY(180deg) translateY(-10px); /* Adds a little "lift" */
+}
 
 .stamp-front, .stamp-back {
     position: absolute; width: 100%; height: 100%;
@@ -205,9 +225,22 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 .stamp-front h3 { position: relative; color: white; z-index: 2; text-align: center; padding: 25px; font-size: 1.8rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 
 .stamp-back {
-    background: white; color: var(--deep-black);
+    background: white; 
+    color: var(--deep-black);
     transform: rotateY(180deg);
-    display: flex; flex-direction: column; padding: 35px; justify-content: center;
+    display: flex; 
+    flex-direction: column; 
+    padding: 40px; /* More internal padding */
+    justify-content: space-between; /* Spreads title, text, and button apart */
+    text-align: left;
+}
+
+.stamp-back p {
+    font-size: 1rem; /* Slightly larger text */
+    line-height: 1.6;
+    margin-bottom: 15px;
+    overflow-y: auto; /* Adds a tiny scrollbar if the AI goes crazy with text */
+    padding-right: 5px;
 }
 
 .choose-btn { background: var(--crimson); color: white; border: none; padding: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 20px; transition: 0.3s; }
@@ -217,8 +250,10 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
    6. SECTION 3: BOUTIQUE & JOURNAL
    ========================================= */
 #fit-section { 
-    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('website22.png') no-repeat center center;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
+                url('website22.png') no-repeat center center;
     background-size: cover;
+    background-attachment: fixed; /* THE PARALLAX MAGIC */
 }
 
 .fit-revamp-container { display: flex; width: 90%; max-width: 1250px; height: 78vh; gap: 60px; align-items: center; }
