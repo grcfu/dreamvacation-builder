@@ -302,6 +302,7 @@ startBtn.onclick = async () => {
     currentAdventure.city = city;
     const coords = await getCoordinates(city);
     if (coords) { 
+        document.getElementById('locked-notice').classList.add('notice-unlocked');
         const opts = await getAdventureOptions(city); 
         clearInterval(loadingInterval); await handleLoading(false); 
         displayAdventureOptions(opts, coords); 
