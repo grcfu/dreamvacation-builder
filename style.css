@@ -286,9 +286,11 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 /* JOURNAL CANVAS */
 #canvas-journal-side { flex: 1.3; display: flex; flex-direction: column; align-items: center; }
 .canvas-container { 
-    background: var(--paper); padding: 40px; border: 1px solid #ccc; 
+    background: url('https://i.pinimg.com/736x/6e/6e/61/6e6e61171e93b1e7a40eba35ceafcc43.jpg') no-repeat center center;
+    padding: 40px; border: 1px solid #ccc; 
     box-shadow: 30px 30px 80px rgba(0,0,0,0.5); transform: rotate(-0.8deg); 
     position: relative; 
+    overflow: visible;
 }
 .canvas-container::before { 
     content: "VOYAGER JOURNAL ENTRY"; position: absolute; top: -18px; left: 40px; 
