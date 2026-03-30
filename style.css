@@ -282,6 +282,8 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     backdrop-filter: blur(8px);
 }
 
+.modal-hidden { display: none !important; }
+
 .modal-content { 
     background: var(--paper);
     padding: 80px;

@@ -110,27 +110,27 @@ async function getWeather(lat, lng) {
 
 // 5. Section 2: Stamps
 function displayAdventureOptions(options, coords) {
-    const wrapper = document.getElementById('itinerary-display');
+    const itineraryDisplay = document.getElementById('itinerary-display');
     const stampImages = [
         "https://i.pinimg.com/736x/90/49/a0/9049a044621c17246473187a41926615.jpg",
         "https://i.pinimg.com/736x/0b/c5/4a/0bc54a7375267a14e9f738a9d1847e13.jpg",
         "https://i.pinimg.com/736x/4e/c5/4d/4ec54d001099e0df365022830f0f585d.jpg"
     ];
 
-    wrapper.innerHTML = `
+    itineraryDisplay.innerHTML = `
         <div class="itinerary-postcard">
-            <h4 style="color:${COLORS.crimson}; letter-spacing:3px;">GREETINGS FROM</h4>
+            <h4>GREETINGS FROM</h4>
             <h2>${currentAdventure.city.toUpperCase()}</h2>
-            <p>I found three hidden gems for your collection. Hover to reveal their story, then choose the one that speaks to you.</p>
+            <p>Hover to reveal their story, then choose your destination.</p>
         </div>
         <div class="stamps-row"></div>
     `;
 
-    const row = wrapper.querySelector('.stamps-row');
+    const row = itineraryDisplay.querySelector('.stamps-row');
     options.forEach((opt, i) => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'stamp-wrapper'; // This is our new "Hitbox"
-        wrapper.innerHTML = `
+        const stampWrap = document.createElement('div'); // ⬅️ Renamed from 'wrapper'
+        stampWrap.className = 'stamp-wrapper';
+        stampWrap.innerHTML = `
             <div class="stamp-card">
                 <div class="stamp-front" style="background-image: url('${stampImages[i]}')">
                     <div class="stamp-overlay"></div>
@@ -138,18 +138,19 @@ function displayAdventureOptions(options, coords) {
                 </div>
                 <div class="stamp-back">
                     <h4 style="color:${COLORS.crimson}; font-size:0.75rem; font-weight:700;">${opt.vibe.toUpperCase()}</h4>
-                    <p style="color:${COLORS.forestGreen}; font-size:0.95rem;">${opt.description}</p>
+                    <p style="color:${COLORS.forest}; font-size:0.95rem; line-height:1.5;">${opt.description}</p>
                     <button class="choose-btn">Choose Me</button>
                 </div>
             </div>
         `;
         
-        wrapper.querySelector('.choose-btn').onclick = (e) => {
+        stampWrap.querySelector('.choose-btn').onclick = (e) => {
             e.stopPropagation();
-            selectAdventure(opt, coords);
+            selectAdventure(opt, coords); // This will now work without crashing!
         };
-        row.appendChild(wrapper);
+        row.appendChild(stampWrap);
     });
+    
     revealAndScroll('selection-section');
 }
 
