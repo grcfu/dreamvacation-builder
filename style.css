@@ -243,7 +243,12 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     padding-right: 5px;
 }
 
-.choose-btn { background: var(--crimson); color: white; border: none; padding: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 20px; transition: 0.3s; }
+.choose-btn { background: var(--crimson); color: white; border: none; padding: 14px; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 20px; transition: 0.3s; 
+    position: relative;
+    z-index: 10;
+    pointer-events: all;
+}
+
 .choose-btn:hover { background: var(--deep-black); letter-spacing: 1px; }
 
 /* =========================================
