@@ -249,27 +249,75 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 /* =========================================
    6. SECTION 3: BOUTIQUE & JOURNAL
    ========================================= */
+
+/* The Main Section Background with Parallax */
 #fit-section { 
     background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), 
                 url('website22.png') no-repeat center center;
     background-size: cover;
-    background-attachment: fixed; /* THE PARALLAX MAGIC */
+    background-attachment: fixed; /* Parallax effect */
 }
 
-.fit-revamp-container { display: flex; width: 90%; max-width: 1250px; height: 78vh; gap: 60px; align-items: center; }
+.fit-revamp-container { 
+    display: flex; 
+    width: 90%; 
+    max-width: 1250px; 
+    height: 78vh; 
+    gap: 60px; 
+    align-items: center; 
+    padding-top: 100px;
+}
 
-/* INSTRUCTION MODAL */
-#instruction-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(12, 25, 17, 0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-.modal-hidden { display: none !important; }
+/* --- THE "HEY YOU!" INSTRUCTION MODAL --- */
+#instruction-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(12, 25, 17, 0.9);
+    z-index: 2000; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
 .modal-content { 
-    background: white; padding: 60px; border: 4px solid var(--crimson); 
-    box-shadow: 25px 25px 0 var(--forest-green); 
-    max-width: 500px; position: relative; text-align: left;
+    background: var(--paper);
+    padding: 80px;
+    max-width: 900px;
+    width: 85%;
+    position: relative; text-align: left;
+    border: 15px double;
+    border-color: var(--crimson) var(--forest-green);
+    /* Subtle decorative pattern */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><g fill="%232B3328" opacity="0.05"><path d="M10,10 q15,-5 30,0 t30,0 30,0" stroke="%23E52B50" stroke-width="0.5" fill="none"/><path d="M10,30 q15,5 30,0 t30,0 30,0" stroke="%232B3328" stroke-width="0.5" fill="none"/></g></svg>');
+    box-shadow: 25px 25px 60px rgba(12, 25, 17, 0.4); 
     animation: slideDown 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex; flex-direction: column;
 }
-#close-modal { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 3rem; cursor: pointer; color: var(--plum); }
 
-/* CAROUSEL CARDS */
+#close-modal {
+    position: absolute; top: 30px; right: 30px;
+    background: none; border: none;
+    font-size: 5rem; cursor: pointer;
+    color: var(--forest-green); opacity: 0.6;
+    transition: 0.3s;
+}
+#close-modal:hover { color: var(--crimson); opacity: 1; transform: scale(1.1) rotate(90deg); }
+
+.modal-hey-you { font-family: 'DM Serif Display', serif; font-size: 6rem; color: var(--crimson); text-align: center; margin-bottom: 20px; }
+.modal-large-title { font-size: 4rem; color: var(--forest-green); margin-bottom: 25px; letter-spacing: -2px; }
+.modal-context-subtitle { font-family: 'Inter', sans-serif; color: var(--plum); letter-spacing: 2px; margin-bottom: 10px; max-width: 600px; line-height: 1.6; }
+.modal-directions-intro { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--forest-green); margin-bottom: 40px; }
+
+.modal-directions-list { list-style: none; }
+.modal-directions-list li { display: flex; align-items: flex-start; gap: 30px; margin-bottom: 40px; }
+.step-icon { font-size: 3rem; color: var(--sky-blue); opacity: 0.9; padding-top: 5px; }
+.step-details { flex: 1; font-family: 'Inter', sans-serif; font-size: 1.25rem; color: var(--deep-black); line-height: 1.8; }
+.modal-directions-list strong { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: var(--plum); display: block; margin-bottom: 5px; }
+
+.highlight-crimson { color: var(--crimson); font-weight: bold; }
+.highlight-green { color: var(--forest-green); font-weight: bold; }
+.highlight-plum { color: var(--plum); font-weight: bold; }
+.highlight-paper { background: var(--off-white); padding: 0 5px; color: var(--plum); font-weight: bold; }
+
+/* --- THE BOUTIQUE ITEM CARDS --- */
 #outfit-picker-side { flex: 1; height: 100%; overflow-y: scroll; scrollbar-width: none; padding: 30px 10px; }
 .essential-item { 
     background: rgba(255, 255, 255, 0.95); padding: 18px; margin-bottom: 25px; border: 2.5px solid var(--deep-black);
@@ -277,31 +325,28 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     box-shadow: 12px 12px 0 var(--teal); opacity: 0; transform: translateX(-80px);
 }
 .revealed .essential-item { opacity: 1; transform: translateX(0); }
-
 .essential-item:hover { transform: translateX(10px); border-color: var(--crimson); box-shadow: 12px 12px 0 var(--crimson); }
 .essential-item.selected { background: var(--forest-green); color: white; border-color: var(--sky-blue); box-shadow: 12px 12px 0 var(--vibrant-gold); }
+.item-img-thumb { width: 75px; height: 75px; object-fit: cover; border: 2px solid white; border-radius: 4px; }
 
-.item-img-thumb { width: 75px; height: 75px; object-fit: cover; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 4px; }
-
-/* JOURNAL CANVAS */
+/* --- THE JOURNAL CANVAS --- */
 #canvas-journal-side { flex: 1.3; display: flex; flex-direction: column; align-items: center; }
 .canvas-container { 
     background: url('https://i.pinimg.com/736x/6e/6e/61/6e6e61171e93b1e7a40eba35ceafcc43.jpg') no-repeat center center;
+    background-size: cover;
     padding: 40px; border: 1px solid #ccc; 
     box-shadow: 30px 30px 80px rgba(0,0,0,0.5); transform: rotate(-0.8deg); 
-    position: relative; 
-    overflow: visible;
+    position: relative; overflow: visible;
 }
 .canvas-container::before { 
     content: "VOYAGER JOURNAL ENTRY"; position: absolute; top: -18px; left: 40px; 
     background: var(--crimson); color: white; padding: 8px 25px; 
     font-size: 0.9rem; z-index: 10; letter-spacing: 2px;
 }
-
 #fit-canvas { background: transparent; cursor: crosshair; }
 
 .controls-vibrant { display: flex; gap: 20px; margin-top: 35px; align-items: center; }
-.color-btn { width: 40px; height: 40px; border-radius: 50%; border: 3px solid white; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: 0.2s; }
+.color-btn { width: 40px; height: 40px; border-radius: 50%; border: 3px solid white; cursor: pointer; transition: 0.2s; }
 .color-btn:hover { transform: scale(1.2); }
 
 #clear-canvas, #finish-btn { padding: 14px 35px; border-radius: 100px; font-weight: 700; text-transform: uppercase; cursor: pointer; border: 2px solid var(--forest-green); transition: 0.3s; }
@@ -383,3 +428,4 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     40% {transform: translateY(-10px);}
     60% {transform: translateY(-5px);}
 }
+
