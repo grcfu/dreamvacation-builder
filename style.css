@@ -436,3 +436,9 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     60% {transform: translateY(-5px);}
 }
 
+/* Feedback for invalid inputs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
