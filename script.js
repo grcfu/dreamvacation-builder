@@ -298,17 +298,46 @@ function createParticle(cls, parent) {
 
 // 9. Event Listeners
 startBtn.onclick = async () => {
-    const city = cityInput.value.trim(); if (!city) return;
-    const loadingInterval = await handleLoading(true); startBtn.disabled = true; startBtn.innerText = "PACKING...";
+    const city = cityInput.value.trim(); 
+    if (!city) return;
+
+    // Start the aesthetic loading sequence
+    const loadingInterval = await handleLoading(true); 
+    startBtn.disabled = true; 
+    startBtn.innerText = "SEARCHING...";
+    
+    // Clear any previous error colors
+    loaderStatus.style.color = "var(--plum)";
+
     currentAdventure.city = city;
     const coords = await getCoordinates(city);
+
     if (coords) { 
+        // SUCCESS: Unlock the rest of the site
         document.getElementById('locked-notice').classList.add('notice-unlocked');
         const opts = await getAdventureOptions(city); 
-        clearInterval(loadingInterval); await handleLoading(false); 
+        
+        clearInterval(loadingInterval); 
+        await handleLoading(false); 
         displayAdventureOptions(opts, coords); 
+    } else {
+        // ERROR: Handle invalid city/country/gibberish
+        clearInterval(loadingInterval);
+        
+        // Keep the loader visible but change the message to an editorial error
+        loaderFill.style.width = "0%";
+        loaderStatus.innerText = "Destination not found in the archives. Try a specific city?";
+        loaderStatus.style.color = "var(--crimson)"; // Turn the text red for notice
+        
+        // Reset the button so they can try again
+        startBtn.disabled = false;
+        startBtn.innerText = "CHECK IN";
+        
+        // Shake the input bar for a bit of "oops" feedback
+        const searchBar = document.querySelector('.entry-submission-overlay');
+        searchBar.style.animation = "shake 0.5s ease";
+        setTimeout(() => searchBar.style.animation = "", 500);
     }
-    startBtn.disabled = false; startBtn.innerText = "CHECK IN";
 };
 
 async function shareJourney() { if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href }); else alert("Journey details copied!"); }
