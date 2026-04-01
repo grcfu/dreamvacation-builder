@@ -262,21 +262,47 @@ function draw(e) {
 function generateFinalTicket() {
     const img = document.getElementById('fit-canvas').toDataURL();
     const area = document.getElementById('final-ticket-area');
+    
+    // Generate unique data
+    const seatNum = Math.floor(Math.random() * 30 + 1) + String.fromCharCode(65 + Math.floor(Math.random() * 6));
+    const gateNum = "B" + Math.floor(Math.random() * 20 + 1);
+    
+    // Generate barcode lines
+    let barcodeHTML = '';
+    for(let i=0; i<60; i++) {
+        const w = Math.floor(Math.random() * 3) + 1;
+        barcodeHTML += `<div style="width:${w}px; height: 100%;"></div>`;
+    }
+
     area.innerHTML = `
         <div class="ticket">
             <div class="ticket-main">
-                <h4 style="font-size: 0.7rem; letter-spacing: 5px; color: ${COLORS.crimson}; font-weight:700; margin-bottom:15px;">OFFICIAL BOARDING PASS</h4>
-                <h2 style="font-size: 4rem; color: ${COLORS.forest}; margin-bottom: 20px;">${currentAdventure.city.toUpperCase()}</h2>
-                <div style="background:${COLORS.off_white}; padding:20px; border-left:4px solid ${COLORS.crimson};">
-                    <p style="font-weight: 700; font-size:1.3rem;">${currentAdventure.choice.name}</p>
-                    <p style="font-family: 'Playfair Display'; font-style: italic; opacity: 0.7;">${currentAdventure.weather.temp}°F — ${currentAdventure.weather.condition}</p>
+                <div class="ticket-header">
+                    <span class="airline-name">Voyager Airways</span>
+                    <span class="airplane-icon">✈️</span>
                 </div>
-                <button class="share-btn" onclick="shareJourney()">Share Journey</button>
+                
+                <h2 style="font-size: 4rem; margin: 15px 0;">${currentAdventure.city.toUpperCase()}</h2>
+                
+                <div class="ticket-data">
+                    <div class="data-item"><label>Passenger</label><span>Aesthetic Wanderer</span></div>
+                    <div class="data-item"><label>Flight</label><span>VE${Math.floor(Math.random()*9000+1000)}</span></div>
+                    <div class="data-item"><label>Seat</label><span>${seatNum}</span></div>
+                    <div class="data-item"><label>Gate</label><span>${gateNum}</span></div>
+                    <div class="data-item"><label>Boarding</label><span>18:45</span></div>
+                    <div class="data-item"><label>Class</label><span>First Class</span></div>
+                </div>
+
+                <div class="barcode">${barcodeHTML}</div>
+                
+                <button class="share-btn" onclick="shareJourney()" style="margin-top: 15px; width: fit-content; padding: 10px 30px;">Share Pass</button>
             </div>
+            
             <div class="ticket-stub">
-                <h4 style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 20px; color: ${COLORS.forest}; opacity:0.5;">PHOTO ID</h4>
-                <img src="${img}" style="width: 100%; border: 3px solid white; box-shadow:0 10px 20px rgba(0,0,0,0.1); filter: contrast(1.05);">
-                <p style="font-size: 0.7rem; margin-top: 25px; font-weight:700; color: ${COLORS.crimson};">GATE B19</p>
+                <label style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 10px;">JOURNAL ID</label>
+                <img src="${img}" style="width: 140px; height: 160px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); object-fit: cover;">
+                <h3 style="margin-top: 15px; font-size: 1.2rem;">${seatNum}</h3>
+                <p style="font-size: 0.7rem; font-weight: 700; color: var(--crimson);">${currentAdventure.choice.name.toUpperCase()}</p>
             </div>
         </div>
     `;
