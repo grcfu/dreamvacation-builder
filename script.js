@@ -91,12 +91,59 @@ async function getAdventureOptions(city) {
         const response = await fetch('https://cse2004.com/api/openai/responses', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${OPENAI_KEY}` },
-            body: JSON.stringify({ input: `3 trendy aesthetic student activities in ${city}.`, text: { format: { type: 'json_schema', name: 'adventure_options', schema: { type: 'object', properties: { options: { type: 'array', items: { type: 'object', properties: { name: { type: 'string' }, vibe: { type: 'string' }, description: { type: 'string' } }, required: ['name', 'vibe', 'description'], additionalProperties: false } } }, required: ['options'], additionalProperties: false }, strict: true } } })
+            body: JSON.stringify({ 
+                // IMPROVED PROMPT: Forces 2-3 detailed sentences
+                input: `Provide 3 trendy aesthetic student activities in ${city}. For each, write a detailed 2-3 sentence description about the vibe, the sights, and why it is a must-see.`, 
+                text: { 
+                    format: { 
+                        type: 'json_schema', 
+                        name: 'adventure_options', 
+                        schema: { 
+                            type: 'object', 
+                            properties: { 
+                                options: { 
+                                    type: 'array', 
+                                    items: { 
+                                        type: 'object', 
+                                        properties: { 
+                                            name: { type: 'string' }, 
+                                            vibe: { type: 'string' }, 
+                                            description: { type: 'string' } 
+                                        }, 
+                                        required: ['name', 'vibe', 'description'], 
+                                        additionalProperties: false 
+                                    } 
+                                } 
+                            }, 
+                            required: ['options'], 
+                            additionalProperties: false 
+                        }, 
+                        strict: true 
+                    } 
+                } 
+            })
         });
         const data = await response.json();
         return JSON.parse(data.text).options;
     } catch (e) {
-        return [{ name: "The Local Bistro", vibe: "Chic", description: "Beautiful curated space." }, { name: "Sunset View", vibe: "Cinematic", description: "Best city views." }, { name: "Vintage Archive", vibe: "Moody", description: "Filled with stories." }];
+        // IMPROVED FALLBACK: Detailed descriptions so the user never sees "short" text
+        return [
+            { 
+                name: "The Local Bistro", 
+                vibe: "Chic & Organic", 
+                description: "A sun-drenched corner filled with hanging plants and the aroma of freshly roasted beans. It’s the ultimate spot to relax with a sketchbook and watch the city move by through floor-to-ceiling windows." 
+            },
+            { 
+                name: "Golden Hour Ridge", 
+                vibe: "Cinematic", 
+                description: "A short trek leads to the highest point in the area, offering a panoramic view that turns pink and gold as the sun dips. It's an essential stop for anyone looking to capture the perfect, moody skyline shot." 
+            },
+            { 
+                name: "The Vintage Archive", 
+                vibe: "Moody & Academic", 
+                description: "Tucked away in a quiet alley, this shop is a treasure trove of rare film cameras and antique journals. The smell of old paper and the soft crackle of jazz records create an atmosphere of pure nostalgia." 
+            }
+        ];
     }
 }
 
