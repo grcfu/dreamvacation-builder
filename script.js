@@ -248,6 +248,22 @@ function startFitCheck() {
         </div>
     `;
 
+    document.querySelectorAll('.color-btn').forEach(btn => {
+        btn.addEventListener('click', () => setColor(btn.dataset.color));
+    });
+
+    document.getElementById('clear-canvas').addEventListener('click', () => { 
+        ctx.clearRect(0,0,450,500); 
+        currentAdventure.activeImages = []; 
+        document.querySelectorAll('.essential-item').forEach(el => el.classList.remove('selected'));
+    });
+
+    document.getElementById('finish-btn').addEventListener('click', generateFinalTicket);
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('instruction-modal').classList.add('modal-hidden');
+    });
+
     const canvas = document.getElementById('fit-canvas'); ctx = canvas.getContext('2d');
     ctx.strokeStyle = COLORS.forest; ctx.lineWidth = 4; ctx.lineCap = "round";
     
