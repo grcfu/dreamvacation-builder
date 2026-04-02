@@ -166,8 +166,8 @@ function displayAdventureOptions(options, coords) {
                     <h3>${opt.name}</h3>
                 </div>
                 <div class="stamp-back">
-                    <h4 style="color:${COLORS.crimson}; font-size:0.75rem; font-weight:700;">${opt.vibe.toUpperCase()}</h4>
-                    <p style="color:${COLORS.forest}; font-size:0.95rem; line-height:1.5;">${opt.description}</p>
+                    <h4 class="stamp-vibe-tag">${opt.vibe.toUpperCase()}</h4>
+                    <p class="stamp-description-text">${opt.description}</p>
                     <button class="choose-btn">Choose Me</button>
                 </div>
             </div>
@@ -257,12 +257,11 @@ function startFitCheck() {
         modal.classList.add('modal-hidden');
     });
 
-    picker.innerHTML = `<h2 style="font-size: 2.2rem; margin-bottom: 25px; color: white;">The Boutique</h2>`;
+    picker.innerHTML = `<h2 class="boutique-title">The Boutique</h2>`;
     boutiqueItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'essential-item';
         div.innerHTML = `<img src="${item.img}" class="item-img-thumb" alt="${item.name}"><div><strong>${item.name}</strong><br><small>Click to Pack</small></div>`;
-        
         div.addEventListener('click', () => toggleItem(item, div));
         picker.appendChild(div);
     });
@@ -389,7 +388,7 @@ function generateFinalTicket() {
                     <span class="airline-name">Voyager Airways</span>
                     <span class="airplane-icon">✈️</span>
                 </div>
-                <h2 style="font-size: 4rem; margin: 15px 0;">${currentAdventure.city.toUpperCase()}</h2>
+                <h2 class="ticket-city-display">${currentAdventure.city.toUpperCase()}</h2>
                 <div class="ticket-data">
                     <div class="data-item"><label>Passenger</label><span>Aesthetic Wanderer</span></div>
                     <div class="data-item"><label>Flight</label><span>VE${Math.floor(Math.random()*9000+1000)}</span></div>
@@ -399,13 +398,13 @@ function generateFinalTicket() {
                     <div class="data-item"><label>Class</label><span>First Class</span></div>
                 </div>
                 <div class="barcode">${barcodeHTML}</div>
-                <button class="share-btn" id="final-share-btn" style="margin-top: 15px; width: fit-content; padding: 10px 30px;">Share Pass</button>
+                <button class="share-btn" id="final-share-btn">Share Pass</button>
             </div>
             <div class="ticket-stub">
-                <label style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 10px;">JOURNAL ID</label>
-                <img src="${img}" style="width: 140px; height: 160px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); object-fit: cover;">
-                <h3 style="margin-top: 15px; font-size: 1.2rem;">${seatNum}</h3>
-                <p style="font-size: 0.7rem; font-weight: 700; color: var(--crimson);">${currentAdventure.choice.name.toUpperCase()}</p>
+                <label class="ticket-stub-label">JOURNAL ID</label>
+                <img src="${img}" class="ticket-journal-img" alt="Your custom travel journal doodle">
+                <h3 class="ticket-stub-seat">${seatNum}</h3>
+                <p class="ticket-stub-choice">${currentAdventure.choice.name.toUpperCase()}</p>
             </div>
         </div>
         <div class="reset-container">

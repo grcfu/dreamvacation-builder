@@ -663,3 +663,86 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     50% { transform: scale(1.1); filter: drop-shadow(0 0 5px var(--teal)); }
     100% { transform: scale(1); }
 }
+
+/* =========================================
+   11. RUBRIC COMPLIANCE: MOVED FROM INLINE
+   ========================================= */
+
+/* Locked Notice Styles */
+.locked-status {
+    letter-spacing: 5px;
+    opacity: 0.5;
+}
+
+.locked-title {
+    font-size: 3rem;
+    margin: 20px 0;
+}
+
+.locked-hint {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+/* Final Ticket Styles */
+#final-share-btn {
+    margin-top: 15px;
+    width: fit-content;
+    padding: 10px 30px;
+}
+
+.ticket-journal-img {
+    width: 140px;
+    height: 160px;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    object-fit: cover;
+    margin-top: 15px; /* Added for spacing */
+}
+
+/* =========================================
+   12. TICKET & UI TEXT REFINEMENTS (RUBRIC CLEANUP)
+   ========================================= */
+
+/* Template Literal Support Classes */
+.boutique-title {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    color: white;
+}
+
+.stamp-vibe-tag {
+    color: var(--crimson);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.stamp-description-text {
+    color: var(--forest-green);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.ticket-city-display {
+    font-size: 4rem;
+    margin: 15px 0;
+}
+
+.ticket-stub-label {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.ticket-stub-seat {
+    margin-top: 15px;
+    font-size: 1.2rem;
+}
+
+.ticket-stub-choice {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--crimson);
+}
