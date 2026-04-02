@@ -538,3 +538,76 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     0% { transform: scale(1.5) rotate(-5deg); opacity: 0; }
     100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
+
+/* =========================================
+   9. THE ULTIMATE RESET BUTTON (AURORA GLASS)
+   ========================================= */
+.reset-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.reset-voyage-btn {
+    position: relative;
+    padding: 20px 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* The Shifting Aurora Background */
+.reset-voyage-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: conic-gradient(
+        from 180deg at 50% 50%,
+        var(--crimson),
+        var(--sky-blue),
+        var(--olive-lime),
+        var(--plum),
+        var(--crimson)
+    );
+    animation: rotateAurora 6s linear infinite;
+    opacity: 0.4;
+    z-index: -1;
+    transition: opacity 0.5s ease;
+}
+
+/* Hover States */
+.reset-voyage-btn:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 20px 60px rgba(229, 43, 80, 0.4);
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.reset-voyage-btn:hover::before {
+    opacity: 0.8;
+    animation-duration: 3s; /* Speeds up the "energy" on hover */
+}
+
+.reset-voyage-btn:active {
+    transform: translateY(2px);
+}
+
+@keyframes rotateAurora {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
