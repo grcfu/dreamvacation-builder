@@ -24,7 +24,7 @@ function revealAndScroll(sectionId) {
     setTimeout(() => { section.scrollIntoView({ behavior: 'smooth' }); }, 50);
 }
 
-// NEW: Optimized Loading Animation Logic
+// Optimized Loading Animation Logic
 async function handleLoading(show) {
     if (show) {
         loaderContainer.classList.remove('loader-hidden');
@@ -38,38 +38,29 @@ async function handleLoading(show) {
         
         let progress = 0;
         let phraseIndex = 0;
-        let tickCount = 0; // This will track how many times the interval has run
+        let tickCount = 0;
 
-        // Initially set the first phrase
         loaderStatus.innerText = phrases[0];
 
         const interval = setInterval(() => {
-            // 1. Smooth Bar Movement
-            // We update this every 150ms so the bar doesn't look laggy
             progress += Math.random() * 1.5; 
             if (progress > 95) progress = 95;
             loaderFill.style.width = `${progress}%`;
 
-            // 2. Slow Text Changes
-            // We only change the text every 18 ticks (approx. every 2.7 seconds)
             tickCount++;
             if (tickCount >= 18) {
                 phraseIndex = (phraseIndex + 1) % phrases.length;
-                loaderStatus.style.opacity = 0; // Brief fade out for aesthetics
-                
+                loaderStatus.style.opacity = 0; 
                 setTimeout(() => {
                     loaderStatus.innerText = phrases[phraseIndex];
                     loaderStatus.style.opacity = 1;
                 }, 300);
-                
-                tickCount = 0; // Reset counter for the next phrase
+                tickCount = 0;
             }
-
-        }, 150); // Faster interval makes the progress bar move much smoother
+        }, 150);
 
         return interval;
     } else {
-        // Finishing state
         loaderFill.style.width = "100%";
         setTimeout(() => {
             loaderContainer.classList.add('loader-hidden');
@@ -77,6 +68,7 @@ async function handleLoading(show) {
         }, 500);
     }
 }
+
 // 4. API Logic
 async function getCoordinates(city) {
     try {
@@ -92,7 +84,6 @@ async function getAdventureOptions(city) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${OPENAI_KEY}` },
             body: JSON.stringify({ 
-                // IMPROVED PROMPT: Forces 2-3 detailed sentences
                 input: `Provide 3 trendy aesthetic student activities in ${city}. For each, write a detailed 2-3 sentence description about the vibe, the sights, and why it is a must-see.`, 
                 text: { 
                     format: { 
@@ -126,23 +117,10 @@ async function getAdventureOptions(city) {
         const data = await response.json();
         return JSON.parse(data.text).options;
     } catch (e) {
-        // IMPROVED FALLBACK: Detailed descriptions so the user never sees "short" text
         return [
-            { 
-                name: "The Local Bistro", 
-                vibe: "Chic & Organic", 
-                description: "A sun-drenched corner filled with hanging plants and the aroma of freshly roasted beans. It’s the ultimate spot to relax with a sketchbook and watch the city move by through floor-to-ceiling windows." 
-            },
-            { 
-                name: "Golden Hour Ridge", 
-                vibe: "Cinematic", 
-                description: "A short trek leads to the highest point in the area, offering a panoramic view that turns pink and gold as the sun dips. It's an essential stop for anyone looking to capture the perfect, moody skyline shot." 
-            },
-            { 
-                name: "The Vintage Archive", 
-                vibe: "Moody & Academic", 
-                description: "Tucked away in a quiet alley, this shop is a treasure trove of rare film cameras and antique journals. The smell of old paper and the soft crackle of jazz records create an atmosphere of pure nostalgia." 
-            }
+            { name: "The Local Bistro", vibe: "Chic & Organic", description: "A sun-drenched corner filled with hanging plants and the aroma of freshly roasted beans." },
+            { name: "Golden Hour Ridge", vibe: "Cinematic", description: "A short trek leads to the highest point in the area, offering a panoramic view that turns pink and gold." },
+            { name: "The Vintage Archive", vibe: "Moody & Academic", description: "Tucked away in a quiet alley, this shop is a treasure trove of rare film cameras and antique journals." }
         ];
     }
 }
@@ -175,7 +153,7 @@ function displayAdventureOptions(options, coords) {
 
     const row = itineraryDisplay.querySelector('.stamps-row');
     options.forEach((opt, i) => {
-        const stampWrap = document.createElement('div'); // ⬅️ Renamed from 'wrapper'
+        const stampWrap = document.createElement('div');
         stampWrap.className = 'stamp-wrapper';
         stampWrap.innerHTML = `
             <div class="stamp-card">
@@ -203,7 +181,8 @@ function displayAdventureOptions(options, coords) {
 
 async function selectAdventure(choice, coords) {
     const weather = await getWeather(coords.lat, coords.lng);
-    currentAdventure.choice = choice; currentAdventure.weather = weather;
+    currentAdventure.choice = choice; 
+    currentAdventure.weather = weather;
     triggerAtmosphericShift(weather.condition);
     startFitCheck();
 }
@@ -220,23 +199,27 @@ const boutiqueItems = [
 function startFitCheck() {
     const picker = document.getElementById('outfit-picker-side');
     const area = document.getElementById('canvas-area');
-    
-    // Popup logic
     const modal = document.getElementById('instruction-modal');
+    
+    // Popup logic - NO .onclick
     modal.classList.remove('modal-hidden');
-    document.getElementById('close-modal').onclick = () => modal.classList.add('modal-hidden');
+    document.getElementById('close-modal').addEventListener('click', () => {
+        modal.classList.add('modal-hidden');
+    });
 
     picker.innerHTML = `<h2 style="font-size: 2.2rem; margin-bottom: 25px; color: white;">The Boutique</h2>`;
     boutiqueItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'essential-item';
         div.innerHTML = `<img src="${item.img}" class="item-img-thumb"><div><strong>${item.name}</strong><br><small>Click to Pack</small></div>`;
-        div.onclick = () => toggleItem(item, div);
+        
+        // NO .onclick
+        div.addEventListener('click', () => toggleItem(item, div));
         picker.appendChild(div);
     });
 
     area.innerHTML = `
-    <div class="canvas-container">
+        <div class="canvas-container">
             <canvas id="fit-canvas" width="450" height="500"></canvas>
             <div class="controls-vibrant">
                 <div class="color-btn" data-color="${COLORS.crimson}" style="background:${COLORS.crimson};"></div>
@@ -248,6 +231,11 @@ function startFitCheck() {
         </div>
     `;
 
+    const canvas = document.getElementById('fit-canvas'); 
+    ctx = canvas.getContext('2d');
+    ctx.strokeStyle = COLORS.forest; ctx.lineWidth = 4; ctx.lineCap = "round";
+
+    // Attach Listeners - NO .onmousedown or .onclick
     document.querySelectorAll('.color-btn').forEach(btn => {
         btn.addEventListener('click', () => setColor(btn.dataset.color));
     });
@@ -260,21 +248,9 @@ function startFitCheck() {
 
     document.getElementById('finish-btn').addEventListener('click', generateFinalTicket);
 
-    document.getElementById('close-modal').addEventListener('click', () => {
-        document.getElementById('instruction-modal').classList.add('modal-hidden');
-    });
-
-    const canvas = document.getElementById('fit-canvas'); ctx = canvas.getContext('2d');
-    ctx.strokeStyle = COLORS.forest; ctx.lineWidth = 4; ctx.lineCap = "round";
-    
-    canvas.onmousedown = (e) => { isDrawing = true; draw(e); };
-    window.onmousemove = (e) => draw(e); window.onmouseup = () => { isDrawing = false; ctx.beginPath(); };
-    document.getElementById('clear-canvas').onclick = () => { 
-        ctx.clearRect(0,0,450,500); 
-        currentAdventure.activeImages = []; 
-        document.querySelectorAll('.essential-item').forEach(el => el.classList.remove('selected'));
-    };
-    document.getElementById('finish-btn').onclick = generateFinalTicket;
+    canvas.addEventListener('mousedown', (e) => { isDrawing = true; draw(e); });
+    window.addEventListener('mousemove', draw); 
+    window.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
     
     revealAndScroll('fit-section');
 }
@@ -283,7 +259,6 @@ function toggleItem(item, element) {
     const index = currentAdventure.activeImages.findIndex(i => i.name === item.name);
     
     if (index === -1) {
-        // Limit to 3 items as per instructions
         if (currentAdventure.activeImages.length >= 3) {
             alert("Your journal is full! Choose your top 3 essentials.");
             return;
@@ -300,13 +275,8 @@ function toggleItem(item, element) {
             currentAdventure.activeImages.push({ name: item.name, x, y, img: imgObj });
         };
     } else {
-        // REMOVE LOGIC
         element.classList.remove('selected');
         currentAdventure.activeImages.splice(index, 1);
-        
-        // Clear and redraw ONLY the remaining images
-        // Note: Manual doodles (flowers) will still clear here. 
-        // To fix that perfectly, we redraw the active boutique items.
         ctx.clearRect(0, 0, 450, 500);
         currentAdventure.activeImages.forEach(active => {
             ctx.drawImage(active.img, active.x, active.y, 150, 180);
@@ -317,20 +287,21 @@ function toggleItem(item, element) {
 function setColor(c) { ctx.strokeStyle = c; }
 function draw(e) {
     if (!isDrawing) return;
-    const canvas = document.getElementById('fit-canvas'); const r = canvas.getBoundingClientRect();
-    ctx.lineTo(e.clientX - r.left, e.clientY - r.top); ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
+    const canvas = document.getElementById('fit-canvas'); 
+    const r = canvas.getBoundingClientRect();
+    ctx.lineTo(e.clientX - r.left, e.clientY - r.top); 
+    ctx.stroke(); 
+    ctx.beginPath(); 
+    ctx.moveTo(e.clientX - r.left, e.clientY - r.top);
 }
 
 // 7. Final Stage
 function generateFinalTicket() {
     const img = document.getElementById('fit-canvas').toDataURL();
     const area = document.getElementById('final-ticket-area');
-    
-    // Generate unique data
     const seatNum = Math.floor(Math.random() * 30 + 1) + String.fromCharCode(65 + Math.floor(Math.random() * 6));
     const gateNum = "B" + Math.floor(Math.random() * 20 + 1);
     
-    // Generate barcode lines
     let barcodeHTML = '';
     for(let i=0; i<60; i++) {
         const w = Math.floor(Math.random() * 3) + 1;
@@ -344,9 +315,7 @@ function generateFinalTicket() {
                     <span class="airline-name">Voyager Airways</span>
                     <span class="airplane-icon">✈️</span>
                 </div>
-                
                 <h2 style="font-size: 4rem; margin: 15px 0;">${currentAdventure.city.toUpperCase()}</h2>
-                
                 <div class="ticket-data">
                     <div class="data-item"><label>Passenger</label><span>Aesthetic Wanderer</span></div>
                     <div class="data-item"><label>Flight</label><span>VE${Math.floor(Math.random()*9000+1000)}</span></div>
@@ -355,12 +324,9 @@ function generateFinalTicket() {
                     <div class="data-item"><label>Boarding</label><span>18:45</span></div>
                     <div class="data-item"><label>Class</label><span>First Class</span></div>
                 </div>
-
                 <div class="barcode">${barcodeHTML}</div>
-                
                 <button class="share-btn" id="final-share-btn" style="margin-top: 15px; width: fit-content; padding: 10px 30px;">Share Pass</button>
             </div>
-            
             <div class="ticket-stub">
                 <label style="font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 10px;">JOURNAL ID</label>
                 <img src="${img}" style="width: 140px; height: 160px; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); object-fit: cover;">
@@ -368,13 +334,13 @@ function generateFinalTicket() {
                 <p style="font-size: 0.7rem; font-weight: 700; color: var(--crimson);">${currentAdventure.choice.name.toUpperCase()}</p>
             </div>
         </div>
-
         <div class="reset-container">
             <button class="reset-voyage-btn" id="final-reset-btn">
                 Archive & Plan New Trip
             </button>
         </div>
     `;
+
     document.getElementById('final-share-btn').addEventListener('click', shareJourney);
     document.getElementById('final-reset-btn').addEventListener('click', resetExperience);
     revealAndScroll('ticket-section');
@@ -398,79 +364,51 @@ startBtn.addEventListener('click', async () => {
     const city = cityInput.value.trim(); 
     if (!city) return;
 
-    // Start the aesthetic loading sequence
     const loadingInterval = await handleLoading(true); 
     startBtn.disabled = true; 
     startBtn.innerText = "SEARCHING...";
-    
-    // Clear any previous error colors
     loaderStatus.style.color = "var(--plum)";
 
     currentAdventure.city = city;
     const coords = await getCoordinates(city);
 
     if (coords) { 
-        // SUCCESS: Unlock the rest of the site
         document.getElementById('locked-notice').classList.add('notice-unlocked');
         const opts = await getAdventureOptions(city); 
-        
         clearInterval(loadingInterval); 
         await handleLoading(false); 
         displayAdventureOptions(opts, coords); 
     } else {
-        // ERROR: Handle invalid city/country/gibberish
         clearInterval(loadingInterval);
-        
-        // Keep the loader visible but change the message to an editorial error
         loaderFill.style.width = "0%";
         loaderStatus.innerText = "Destination not found in the archives. Try a specific city?";
-        loaderStatus.style.color = "var(--crimson)"; // Turn the text red for notice
-        
-        // Reset the button so they can try again
+        loaderStatus.style.color = "var(--crimson)";
         startBtn.disabled = false;
         startBtn.innerText = "CHECK IN";
-        
-        // Shake the input bar for a bit of "oops" feedback
         const searchBar = document.querySelector('.entry-submission-overlay');
         searchBar.style.animation = "shake 0.5s ease";
         setTimeout(() => searchBar.style.animation = "", 500);
     }
-};
+}); // FIXED: Added closing parenthesis here
 
-async function shareJourney() { if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href }); else alert("Journey details copied!"); }
+async function shareJourney() { 
+    if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href }); 
+    else alert("Journey details copied!"); 
+}
 
 // 10. Reset Functionality
 function resetExperience() {
-    // 1. Reset Global State
-    currentAdventure = { 
-        city: '', 
-        choice: null, 
-        weather: null, 
-        activeImages: [] 
-    };
-
-    // 2. Clear UI Inputs & Elements
+    currentAdventure = { city: '', choice: null, weather: null, activeImages: [] };
     cityInput.value = '';
     startBtn.disabled = false;
     startBtn.innerText = "CHECK IN";
     document.getElementById('locked-notice').classList.remove('notice-unlocked');
-    
-    // 3. Clear the Canvas
-    if (ctx) {
-        ctx.clearRect(0, 0, 450, 500);
-    }
-
-    // 4. Hide all sections except hero
-    const sections = ['selection-section', 'fit-section', 'ticket-section'];
-    sections.forEach(id => {
+    if (ctx) ctx.clearRect(0, 0, 450, 500);
+    ['selection-section', 'fit-section', 'ticket-section'].forEach(id => {
         const sec = document.getElementById(id);
         sec.classList.remove('revealed');
         sec.classList.add('hidden');
     });
-
-    // 5. Scroll to Top
     document.getElementById('hero-collage').scrollIntoView({ behavior: 'smooth' });
-    
-    // 6. Clean up environmental effects
     document.getElementById('environment-overlay').innerHTML = '';
 }
