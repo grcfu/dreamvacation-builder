@@ -358,7 +358,7 @@ function generateFinalTicket() {
 
                 <div class="barcode">${barcodeHTML}</div>
                 
-                <button class="share-btn" onclick="shareJourney()" style="margin-top: 15px; width: fit-content; padding: 10px 30px;">Share Pass</button>
+                <button class="share-btn" id="final-share-btn" style="margin-top: 15px; width: fit-content; padding: 10px 30px;">Share Pass</button>
             </div>
             
             <div class="ticket-stub">
@@ -370,11 +370,13 @@ function generateFinalTicket() {
         </div>
 
         <div class="reset-container">
-            <button class="reset-voyage-btn" onclick="resetExperience()">
+            <button class="reset-voyage-btn" id="final-reset-btn">
                 Archive & Plan New Trip
             </button>
         </div>
     `;
+    document.getElementById('final-share-btn').addEventListener('click', shareJourney);
+    document.getElementById('final-reset-btn').addEventListener('click', resetExperience);
     revealAndScroll('ticket-section');
 }
 
