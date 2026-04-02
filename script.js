@@ -414,3 +414,39 @@ startBtn.onclick = async () => {
 };
 
 async function shareJourney() { if (navigator.share) await navigator.share({ title: 'The Voyager Edit', url: window.location.href }); else alert("Journey details copied!"); }
+
+// 10. Reset Functionality
+function resetExperience() {
+    // 1. Reset Global State
+    currentAdventure = { 
+        city: '', 
+        choice: null, 
+        weather: null, 
+        activeImages: [] 
+    };
+
+    // 2. Clear UI Inputs & Elements
+    cityInput.value = '';
+    startBtn.disabled = false;
+    startBtn.innerText = "CHECK IN";
+    document.getElementById('locked-notice').classList.remove('notice-unlocked');
+    
+    // 3. Clear the Canvas
+    if (ctx) {
+        ctx.clearRect(0, 0, 450, 500);
+    }
+
+    // 4. Hide all sections except hero
+    const sections = ['selection-section', 'fit-section', 'ticket-section'];
+    sections.forEach(id => {
+        const sec = document.getElementById(id);
+        sec.classList.remove('revealed');
+        sec.classList.add('hidden');
+    });
+
+    // 5. Scroll to Top
+    document.getElementById('hero-collage').scrollIntoView({ behavior: 'smooth' });
+    
+    // 6. Clean up environmental effects
+    document.getElementById('environment-overlay').innerHTML = '';
+}
