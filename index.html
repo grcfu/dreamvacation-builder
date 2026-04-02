@@ -14,7 +14,8 @@
     </header>
 
 
-    <div class="scroll-container">
+    <main> 
+        <div class="scroll-container">
         
         <section id="hero-collage" class="full-page">
             <div class="editorial-intro-block">
@@ -23,9 +24,11 @@
                 <p class="intro-text">A digital journal for the aesthetic wanderer. Choose where you want to begin.</p>
                 
                 <div class="entry-submission-overlay">
-                    <input type="text" id="city-input" placeholder="Where to next?">
+                    <input type="text" id="city-input" placeholder="Where to next?" autocomplete="off">
+                    <button id="locate-me" type="button" title="Use my current location">📍</button>
                     <button id="start-adventure">CHECK IN</button>
                 </div>
+                <p class="location-hint">Tap the pin to automatically discover your current locale.</p>
 
                 <div id="loading-container" class="loader-hidden">
                     <p id="loader-status">Consulting the archives...</p>
@@ -103,6 +106,7 @@
                 <div class="up-arrow">↑</div>
             </div>
         </div>
+    </main>
 
     <div id="environment-overlay"></div>
     <script src="script.js"></script>
