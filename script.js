@@ -352,6 +352,12 @@ function generateFinalTicket() {
                 <p style="font-size: 0.7rem; font-weight: 700; color: var(--crimson);">${currentAdventure.choice.name.toUpperCase()}</p>
             </div>
         </div>
+
+        <div class="reset-container">
+            <button class="reset-voyage-btn" onclick="resetExperience()">
+                Archive & Plan New Trip
+            </button>
+        </div>
     `;
     revealAndScroll('ticket-section');
 }
