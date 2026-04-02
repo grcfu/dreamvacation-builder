@@ -236,12 +236,12 @@ function startFitCheck() {
     });
 
     area.innerHTML = `
-        <div class="canvas-container">
+    <div class="canvas-container">
             <canvas id="fit-canvas" width="450" height="500"></canvas>
             <div class="controls-vibrant">
-                <div onclick="setColor('${COLORS.crimson}')" class="color-btn" style="background:${COLORS.crimson};"></div>
-                <div onclick="setColor('${COLORS.teal}')" class="color-btn" style="background:${COLORS.teal};"></div>
-                <div onclick="setColor('${COLORS.forest}')" class="color-btn" style="background:${COLORS.forest};"></div>
+                <div class="color-btn" data-color="${COLORS.crimson}" style="background:${COLORS.crimson};"></div>
+                <div class="color-btn" data-color="${COLORS.teal}" style="background:${COLORS.teal};"></div>
+                <div class="color-btn" data-color="${COLORS.forest}" style="background:${COLORS.forest};"></div>
                 <button id="clear-canvas">Reset</button>
                 <button id="finish-btn">Finalize</button>
             </div>
