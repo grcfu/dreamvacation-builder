@@ -191,10 +191,10 @@ function displayAdventureOptions(options, coords) {
             </div>
         `;
         
-        stampWrap.querySelector('.choose-btn').onclick = (e) => {
+        stampWrap.querySelector('.choose-btn').addEventListener('click', (e) => {
             e.stopPropagation();
-            selectAdventure(opt, coords); // This will now work without crashing!
-        };
+            selectAdventure(opt, coords);
+        });
         row.appendChild(stampWrap);
     });
     
