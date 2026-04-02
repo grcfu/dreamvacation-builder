@@ -394,7 +394,7 @@ function createParticle(cls, parent) {
 }
 
 // 9. Event Listeners
-startBtn.onclick = async () => {
+startBtn.addEventListener('click', async () => {
     const city = cityInput.value.trim(); 
     if (!city) return;
 
