@@ -746,3 +746,47 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
     font-weight: 700;
     color: var(--crimson);
 }
+
+/* =========================================
+   13. PROGRESS ROADMAP STYLING
+   ========================================= */
+#voyager-roadmap {
+    display: flex;
+    gap: 40px;
+    margin-top: 15px;
+    border-top: 1px solid rgba(229, 228, 227, 0.2);
+    padding-top: 10px;
+}
+
+.step {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--off-white);
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+}
+
+.step span {
+    font-family: 'DM Serif Display';
+    margin-right: 5px;
+    font-style: italic;
+}
+
+.step.active {
+    opacity: 1;
+    color: var(--vibrant-gold);
+}
+
+/* Add a pulse to the 'Check In' button when input is full */
+#start-adventure.ready {
+    animation: pulseReady 1.5s infinite;
+    background: var(--crimson);
+}
+
+@keyframes pulseReady {
+    0% { transform: scale(1); box-shadow: 0 0 0px var(--crimson); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px var(--crimson); }
+    100% { transform: scale(1); box-shadow: 0 0 0px var(--crimson); }
+}
