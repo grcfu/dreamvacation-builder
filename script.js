@@ -194,8 +194,17 @@ async function selectAdventure(choice, coords) {
 // 6. Section 3: Boutique Logic 
 
 function updateRoadmap(stepNumber) {
-    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-    document.getElementById(`step-${stepNumber}`).classList.add('active');
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, index) => {
+        const currentStepIdx = index + 1;
+        step.classList.remove('active', 'completed');
+        
+        if (currentStepIdx < stepNumber) {
+            step.classList.add('completed'); // Past steps
+        } else if (currentStepIdx === stepNumber) {
+            step.classList.add('active');    // Current step
+        }
+    });
 }
 
 async function handleGeolocation() {
