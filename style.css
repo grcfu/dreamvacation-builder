@@ -792,13 +792,13 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 }
 
 @keyframes growLine {
-    from { width: 0; }
-    to { width: 100%; }
+    from { width: 0; opacity: 0; }
+    to { width: 100%; opacity: 1; }
 }
 
-/* This makes finished steps look "Done" */
+/* This makes finished steps look "Done" in a chic teal */
 .step.completed {
-    opacity: 0.8;
+    opacity: 0.7;
     color: var(--teal);
 }
 
