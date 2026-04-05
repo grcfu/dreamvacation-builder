@@ -777,6 +777,29 @@ h1, h2, h3, h4, .logo, .header-logo, .section-title {
 .step.active {
     opacity: 1;
     color: var(--vibrant-gold);
+    font-weight: 700;
+}
+
+/* Add a little underline to the active step */
+.step.active::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--vibrant-gold);
+    margin-top: 5px;
+    animation: growLine 0.5s ease forwards;
+}
+
+@keyframes growLine {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* This makes finished steps look "Done" */
+.step.completed {
+    opacity: 0.8;
+    color: var(--teal);
 }
 
 /* Add a pulse to the 'Check In' button when input is full */
