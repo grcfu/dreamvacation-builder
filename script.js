@@ -180,6 +180,7 @@ function displayAdventureOptions(options, coords) {
         row.appendChild(stampWrap);
     });
     
+    updateRoadmap(1);
     revealAndScroll('selection-section');
 }
 
@@ -265,7 +266,6 @@ function startFitCheck() {
     const picker = document.getElementById('outfit-picker-side');
     const area = document.getElementById('canvas-area');
     const modal = document.getElementById('instruction-modal');
-    updateRoadmap(2);
     
     modal.classList.remove('modal-hidden');
     document.getElementById('close-modal').addEventListener('click', () => {
@@ -314,6 +314,7 @@ function startFitCheck() {
     window.addEventListener('mousemove', draw); 
     window.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
     
+    updateRoadmap(2);
     revealAndScroll('fit-section');
 }
 
@@ -389,7 +390,6 @@ function generateFinalTicket() {
     const area = document.getElementById('final-ticket-area');
     const seatNum = Math.floor(Math.random() * 30 + 1) + String.fromCharCode(65 + Math.floor(Math.random() * 6));
     const gateNum = "B" + Math.floor(Math.random() * 20 + 1);
-    updateRoadmap(3);
     
     let barcodeHTML = '';
     for(let i=0; i<60; i++) {
@@ -432,6 +432,7 @@ function generateFinalTicket() {
 
     document.getElementById('final-share-btn').addEventListener('click', shareJourney);
     document.getElementById('final-reset-btn').addEventListener('click', resetExperience);
+    updateRoadmap(3);
     revealAndScroll('ticket-section');
 }
 
@@ -470,7 +471,6 @@ startBtn.addEventListener('click', async () => {
         clearInterval(loadingInterval); 
         await handleLoading(false); 
         displayAdventureOptions(opts, coords); 
-        updateRoadmap(2);
     } else {
         clearInterval(loadingInterval);
         loaderFill.style.width = "0%";
@@ -496,13 +496,14 @@ function resetExperience() {
     startBtn.disabled = false;
     startBtn.innerText = "CHECK IN";
     document.getElementById('locked-notice').classList.remove('notice-unlocked');
-    updateRoadmap(1);
+    
     if (ctx) ctx.clearRect(0, 0, 450, 500);
     ['selection-section', 'fit-section', 'ticket-section'].forEach(id => {
         const sec = document.getElementById(id);
         sec.classList.remove('revealed');
         sec.classList.add('hidden');
     });
+    updateRoadmap(1);
     document.getElementById('hero-collage').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('environment-overlay').innerHTML = '';
 }
