@@ -148,9 +148,9 @@ function displayAdventureOptions(options, coords) {
 
     itineraryDisplay.innerHTML = `
         <div class="itinerary-postcard">
-            <h4>GREETINGS FROM</h4>
+            <h4>STEP 01: CHOOSE YOUR VIBE</h4>
             <h2>${currentAdventure.city.toUpperCase()}</h2>
-            <p>Hover to reveal their story, then choose your destination.</p>
+            <p>Flip the vintage stamps below to explore local stories. <strong>Select one destination</strong> to add it to your travel journal.</p>
         </div>
         <div class="stamps-row"></div>
     `;
@@ -192,6 +192,11 @@ async function selectAdventure(choice, coords) {
 }
 
 // 6. Section 3: Boutique Logic 
+
+function updateRoadmap(stepNumber) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(`step-${stepNumber}`).classList.add('active');
+}
 
 async function handleGeolocation() {
     // Add this line at the start of handleGeolocation()
@@ -251,6 +256,7 @@ function startFitCheck() {
     const picker = document.getElementById('outfit-picker-side');
     const area = document.getElementById('canvas-area');
     const modal = document.getElementById('instruction-modal');
+    updateRoadmap(2);
     
     modal.classList.remove('modal-hidden');
     document.getElementById('close-modal').addEventListener('click', () => {
@@ -374,6 +380,7 @@ function generateFinalTicket() {
     const area = document.getElementById('final-ticket-area');
     const seatNum = Math.floor(Math.random() * 30 + 1) + String.fromCharCode(65 + Math.floor(Math.random() * 6));
     const gateNum = "B" + Math.floor(Math.random() * 20 + 1);
+    updateRoadmap(3);
     
     let barcodeHTML = '';
     for(let i=0; i<60; i++) {
@@ -454,6 +461,7 @@ startBtn.addEventListener('click', async () => {
         clearInterval(loadingInterval); 
         await handleLoading(false); 
         displayAdventureOptions(opts, coords); 
+        updateRoadmap(2);
     } else {
         clearInterval(loadingInterval);
         loaderFill.style.width = "0%";
@@ -479,6 +487,7 @@ function resetExperience() {
     startBtn.disabled = false;
     startBtn.innerText = "CHECK IN";
     document.getElementById('locked-notice').classList.remove('notice-unlocked');
+    updateRoadmap(1);
     if (ctx) ctx.clearRect(0, 0, 450, 500);
     ['selection-section', 'fit-section', 'ticket-section'].forEach(id => {
         const sec = document.getElementById(id);
@@ -488,3 +497,11 @@ function resetExperience() {
     document.getElementById('hero-collage').scrollIntoView({ behavior: 'smooth' });
     document.getElementById('environment-overlay').innerHTML = '';
 }
+
+cityInput.addEventListener('input', () => {
+    if (cityInput.value.length > 2) {
+        startBtn.classList.add('ready');
+    } else {
+        startBtn.classList.remove('ready');
+    }
+});
